@@ -1,11 +1,11 @@
-# 📚 LMS Course Management API
+# LMS Course Management API
 
 This project is a **Learning Management System (LMS)** built using **Django** and **Django REST Framework**.
 It provides a robust backend API for managing courses, teachers, students, assignments, materials, lessons, and student progress.
 
 ---
 
-## 🚀 Features
+## Features
 
 * **Teacher Management** – Add, view, update, and delete teacher profiles.
 * **Student Management** – Manage student details and enrollment status.
@@ -18,7 +18,7 @@ It provides a robust backend API for managing courses, teachers, students, assig
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Backend Framework**: Django
 * **API Framework**: Django REST Framework (DRF)
@@ -28,7 +28,7 @@ It provides a robust backend API for managing courses, teachers, students, assig
 
 ---
 
-## 📦 Models Overview
+##  Models Overview
 
 ### 1. **Teacher**
 
@@ -64,7 +64,7 @@ It provides a robust backend API for managing courses, teachers, students, assig
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 CMApi/
@@ -78,7 +78,7 @@ CMApi/
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 ### 1️⃣ Clone the Repository
 
@@ -118,25 +118,7 @@ python manage.py runserver
 ---
 
 ## 📡 API Endpoints (Examples)
-
-| Method | Endpoint             | Description             |
-| ------ | -------------------- | ----------------------- |
-| GET    | `/api/teachers/`     | List all teachers       |
-| POST   | `/api/teachers/`     | Create new teacher      |
-| GET    | `/api/students/`     | List all students       |
-| POST   | `/api/courses/`      | Create new course       |
-| GET    | `/api/courses/{id}/` | Retrieve course details |
-| POST   | `/api/assignments/`  | Create new assignment   |
-| GET    | `/api/lessons/`      | List all lessons        |
-| POST   | `/api/progress/`     | Update lesson progress  |
-
----
-
-## 📄 Example Data (JSON)
-
-Sample JSON data to populate all models is available in the `fixtures/sample_data.json` file.
-
----
+reference the postman documentation for more detailed explanation 
 
 ## 🧑‍💻 Author
 
@@ -145,6 +127,3 @@ Sample JSON data to populate all models is available in the `fixtures/sample_dat
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License.
