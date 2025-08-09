@@ -118,7 +118,8 @@ python manage.py runserver
 ---
 
 ## 📡 API Endpoints (Examples)
-reference the postman documentation for more detailed explanation 
+reference the postman documentation for more detailed explanation :
+https://damisola-d-ajiga-5454729.postman.co/workspace/Damisola-Deboh-Ajiga's-Workspac~17d561c0-9761-49b6-85d9-6eefacd44352/folder/47455886-24c81bec-c178-4403-b3f1-735f06f4e6eb?action=share&creator=47455886&ctx=documentation&active-environment=47455886-07b5df6a-98f5-46f0-9ffb-36478822b93b
 
 ## 🧑‍💻 Author
 
