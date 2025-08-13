@@ -207,7 +207,17 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
 					},
 					"response": []
 				}
