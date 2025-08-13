@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"John Smith\",\r\n    \"email\": \"john.smith@example.com\",\r\n    \"bio\": \"Experienced physics teacher with a passion for interactive learning.\",\r\n    \"specialization\": \"Physics\",\r\n    \"experience\": 10,\r\n    \"is_active\": true\r\n}",
+							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
