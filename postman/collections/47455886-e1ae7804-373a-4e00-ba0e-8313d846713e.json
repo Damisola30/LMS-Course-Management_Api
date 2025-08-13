@@ -70,7 +70,17 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
