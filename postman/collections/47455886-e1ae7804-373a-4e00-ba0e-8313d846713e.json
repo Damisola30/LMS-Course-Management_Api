@@ -402,7 +402,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Course",
 					"id": "47455886-2ec09caa-31bb-4fce-980a-8888806bf9d8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
