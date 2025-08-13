@@ -200,7 +200,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Student data",
 					"id": "47455886-579fdd15-fdd9-451c-9201-05a151e046d0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
