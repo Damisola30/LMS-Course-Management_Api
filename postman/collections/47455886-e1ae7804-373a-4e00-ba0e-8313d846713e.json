@@ -17,7 +17,17 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								""
+							]
+						}
 					},
 					"response": []
 				},
