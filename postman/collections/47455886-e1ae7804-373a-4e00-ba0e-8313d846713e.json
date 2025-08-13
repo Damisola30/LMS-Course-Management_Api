@@ -91,16 +91,27 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 9,\r\n    \"is_active\": true\r\n}",
+							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Further Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"3",
+								""
+							]
 						}
 					},
 					"response": []
