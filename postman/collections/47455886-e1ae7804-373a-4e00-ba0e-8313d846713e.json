@@ -222,7 +222,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update student data",
 					"id": "47455886-429c0eb5-6fd8-4e65-b0b2-3c000d1c7fc0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
