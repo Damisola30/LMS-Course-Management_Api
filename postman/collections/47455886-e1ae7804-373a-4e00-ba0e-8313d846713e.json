@@ -179,7 +179,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilson@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrim@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -218,6 +218,18 @@
 								"2"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-429c0eb5-6fd8-4e65-b0b2-3c000d1c7fc0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
