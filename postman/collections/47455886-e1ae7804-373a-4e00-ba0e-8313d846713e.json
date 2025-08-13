@@ -63,7 +63,7 @@
 					"response": [
 						{
 							"id": "47455886-37b212ed-c7d2-4618-8150-5b272ef1c0fb",
-							"name": "Create teachers",
+							"name": "Example",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
