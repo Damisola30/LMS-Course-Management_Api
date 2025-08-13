@@ -370,7 +370,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Student Data",
+					"name": "Update Course Data",
 					"id": "47455886-484cde8d-8c8c-4340-9d5d-0bf4f8ab66b8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
