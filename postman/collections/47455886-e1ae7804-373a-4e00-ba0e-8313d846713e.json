@@ -253,7 +253,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete student data",
 					"id": "47455886-bd524fe9-1c30-4912-af8f-64f70b4e218f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
