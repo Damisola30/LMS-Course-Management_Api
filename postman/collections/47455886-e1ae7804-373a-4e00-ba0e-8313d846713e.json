@@ -72,13 +72,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/1",
+							"raw": "{{base_url}}/teachers/4",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -103,13 +103,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/teachers/3/",
+							"raw": "{{base_url}}/teachers/4/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"3",
+								"4",
 								""
 							]
 						}
@@ -126,20 +126,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/:id/",
+							"raw": "{{base_url}}/teachers/3/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								":id",
+								"3",
 								""
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
 							]
 						}
 					},
