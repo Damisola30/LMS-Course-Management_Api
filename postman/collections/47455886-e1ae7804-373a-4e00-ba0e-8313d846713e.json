@@ -322,7 +322,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Advanced Algebra\",\r\n    \"description\": \"An in-depth study of algebraic concepts and problem-solving techniques.\",\r\n    \"instructor\": 2,\r\n    \"students\": [2],\r\n    \"start_date\": \"2025-02-01\",\r\n    \"end_date\": \"2025-05-01\",\r\n    \"duration\": 90,\r\n    \"is_active\": true,\r\n    \"category\": \"Mathematics\",\r\n    \"summary\": \"Focuses on equations, inequalities, and functions.\",\r\n    \"level\": \"advanced\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Advanced Operational methods\",\r\n    \"description\": \"An in-depth study of algebraic concepts and problem-solving techniques.\",\r\n    \"instructor\": 1,\r\n    \"students\": [2,1],\r\n    \"start_date\": \"2025-02-01\",\r\n    \"end_date\": \"2025-05-01\",\r\n    \"duration\": 90,\r\n    \"is_active\": true,\r\n    \"category\": \"Mathematics\",\r\n    \"summary\": \"Focuses on equations, inequalities, and functions.\",\r\n    \"level\": \"advanced\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,14 +343,29 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Courses",
 					"id": "47455886-2d2c5834-e2dd-48d6-8b54-c37e6be7d753",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Intro to Drilling\",\r\n  \"description\": \"Basics of drilling operations\",\r\n  \"instructor\": null,\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": false,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 90,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Engineering\",\r\n  \"level\": \"beginner\",\r\n  \"students\": []\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/2/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"2",
+								""
+							]
+						}
 					},
 					"response": []
 				}
