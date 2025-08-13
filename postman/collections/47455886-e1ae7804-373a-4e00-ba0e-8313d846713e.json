@@ -60,40 +60,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"id": "47455886-37b212ed-c7d2-4618-8150-5b272ef1c0fb",
-							"name": "Example",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/teachers/",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"teachers",
-										""
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"responseTime": null,
-							"body": null
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Retrieve teachers",
