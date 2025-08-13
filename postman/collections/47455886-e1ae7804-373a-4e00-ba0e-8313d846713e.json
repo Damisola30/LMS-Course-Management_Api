@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "47455886-e1ae7804-373a-4e00-ba0e-8313d846713e",
 		"name": "LMS CMApi",
-		"description": "**Title:** LMS Course Mnagement API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\n**Main Features:**\n\n- Manage teachers, students, and courses\n    \n- Upload and retrieve files (course )\n    \n\n**Usage:**\n\n1. Set the `{{base_url}}` variable in your Postman environment.\n    \n2. Use the provided folders for organized access to endpoints.",
+		"description": "**Title:** LMS Course Management API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\n**Main Features:**\n\n- Manage teachers, students, and courses\n    \n- Upload and retrieve files (course )\n    \n\n**Usage:**\n\n1. Set the `{{base_url}}` variable in your Postman environment.\n    \n2. Use the provided folders for organized access to endpoints.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
