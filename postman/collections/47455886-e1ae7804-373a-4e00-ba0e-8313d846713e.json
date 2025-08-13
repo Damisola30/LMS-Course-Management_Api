@@ -228,8 +228,27 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrim@example.com\",\r\n    \"age\": 23,\r\n    \"is_active\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
 					},
 					"response": []
 				}
