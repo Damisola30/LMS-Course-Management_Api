@@ -32,7 +32,7 @@
 					"response": [
 						{
 							"id": "47455886-4e8eaeb0-e610-4ceb-b6a6-661e848e5d09",
-							"name": "List teachers",
+							"name": "List teachers Examples",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
