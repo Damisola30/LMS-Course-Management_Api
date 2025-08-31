@@ -15,5 +15,5 @@ router.register(r'progress', ProgressViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('api/', include(router.urls))
     ]
