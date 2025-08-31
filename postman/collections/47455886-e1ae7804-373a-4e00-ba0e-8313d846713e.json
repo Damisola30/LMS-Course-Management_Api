@@ -1,0 +1,584 @@
+{
+	"info": {
+		"_postman_id": "47455886-e1ae7804-373a-4e00-ba0e-8313d846713e",
+		"name": "LMS CMApi",
+		"description": "**Title:** LMS Course Management API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\n**Main Features:**\n\n- Manage teachers, students, and courses\n    \n- Upload and retrieve files (course )\n    \n\n**Usage:**\n\n1. Set the `{{base_url}}` variable in your Postman environment.\n    \n2. Use the provided folders for organized access to endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "teachers",
+			"item": [
+				{
+					"name": "List teachers",
+					"id": "47455886-c422b8d7-8905-4066-91bd-0f487368ee0a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "47455886-4e8eaeb0-e610-4ceb-b6a6-661e848e5d09",
+							"name": "List teachers Examples",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/teachers/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"teachers",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 13 Aug 2025 18:05:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "867"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"John Smith\",\n        \"email\": \"john.smith@example.com\",\n        \"bio\": \"Experienced physics teacher with a passion for interactive learning.\",\n        \"specialization\": \"Physics\",\n        \"experience\": 10,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-09T12:46:32.015761Z\",\n        \"updated_at\": \"2025-08-09T12:46:32.015761Z\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Emily Johnson\",\n        \"email\": \"emily.johnson@example.com\",\n        \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\n        \"specialization\": \"Mathematics\",\n        \"experience\": 8,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-13T14:16:50.917570Z\",\n        \"updated_at\": \"2025-08-13T14:16:50.917570Z\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Emily Johnson\",\n        \"email\": \"emily.johnson@example2.com\",\n        \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\n        \"specialization\": \"Further Mathematics\",\n        \"experience\": 8,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-13T16:56:52.229861Z\",\n        \"updated_at\": \"2025-08-13T16:58:02.988981Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create teachers",
+					"id": "47455886-6ed99fc5-32f1-44ef-98d2-682a1ba28936",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve teachers",
+					"id": "47455886-0fbcb2a5-1d94-4eeb-8783-8ae800239e54",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update teachers",
+					"id": "47455886-fa79a5ca-a59e-4bce-874c-2fae6e53dd42",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Further Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/4/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete teachers",
+					"id": "47455886-af272dee-f76b-4bf0-96c2-adb5850ebb99",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-3f67e213-441d-4aec-80f4-774cd7023464",
+			"description": "Endpoints for managing teacher records.\n\n**Includes:**\n\n- Create new teachers\n    \n- Retrieve teacher details by ID\n    \n- Update teacher information\n    \n- Delete teacher records\n    \n- List all teachers"
+		},
+		{
+			"name": "students",
+			"item": [
+				{
+					"name": "List students",
+					"id": "47455886-841bea31-ede5-4760-bab2-12216ef3839e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create students",
+					"id": "47455886-6d5eae65-d96d-45f6-a54a-c3fd010abec6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrimet@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Student data",
+					"id": "47455886-579fdd15-fdd9-451c-9201-05a151e046d0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update student data",
+					"id": "47455886-429c0eb5-6fd8-4e65-b0b2-3c000d1c7fc0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrim@example.com\",\r\n    \"age\": 23,\r\n    \"is_active\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete student data",
+					"id": "47455886-bd524fe9-1c30-4912-af8f-64f70b4e218f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrim@example.com\",\r\n    \"age\": 23,\r\n    \"is_active\": true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-b0fd75f9-fb7c-4c74-85a1-6a838a28d011",
+			"description": "Endpoints for managing student records.\n\n**Includes:**\n\n- Add new students\n    \n- Retrieve student details by ID\n    \n- Update student information\n    \n- Delete student records\n    \n- List all students"
+		},
+		{
+			"name": "courses",
+			"item": [
+				{
+					"name": "List courses",
+					"id": "47455886-b10f501d-27a6-4b7c-82de-227ee9ca71fe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Intro to Drilling\",\r\n  \"description\": \"Basics of drilling operations\",\r\n  \"instructor\": null,\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": false,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 90,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Engineering\",\r\n  \"level\": \"beginner\",\r\n  \"students\": []\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create courses",
+					"id": "47455886-3ba16056-780e-42e4-bc14-83d43a4e7844",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Advanced Operational methods\",\r\n    \"description\": \"An in-depth study of algebraic concepts and problem-solving techniques.\",\r\n    \"instructor\": 1,\r\n    \"students\": [2,1],\r\n    \"start_date\": \"2025-02-01\",\r\n    \"end_date\": \"2025-05-01\",\r\n    \"duration\": 90,\r\n    \"is_active\": true,\r\n    \"category\": \"Mathematics\",\r\n    \"summary\": \"Focuses on equations, inequalities, and functions.\",\r\n    \"level\": \"advanced\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Courses",
+					"id": "47455886-2d2c5834-e2dd-48d6-8b54-c37e6be7d753",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Intro to Drilling\",\r\n  \"description\": \"Basics of drilling operations\",\r\n  \"instructor\": null,\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": false,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 90,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Engineering\",\r\n  \"level\": \"beginner\",\r\n  \"students\": []\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/2/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course Data",
+					"id": "47455886-484cde8d-8c8c-4340-9d5d-0bf4f8ab66b8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Advanced Operational methods\",\r\n    \"description\": \"An in-depth study of algebraic concepts and problem-solving techniques.\",\r\n    \"instructor\": 1,\r\n    \"students\": [2,1,3],\r\n    \"start_date\": \"2025-02-01\",\r\n    \"end_date\": \"2025-05-01\",\r\n    \"duration\": 90,\r\n    \"is_active\": true,\r\n    \"category\": \"Mathematics\",\r\n    \"summary\": \"Focuses on equations, inequalities, and functions.\",\r\n    \"level\": \"advanced\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/2/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"id": "47455886-2ec09caa-31bb-4fce-980a-8888806bf9d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-24c81bec-c178-4403-b3f1-735f06f4e6eb",
+			"description": "Endpoints for managing course records.\n\n**Includes:**\n\n- Create new courses\n    \n- Retrieve course details by ID\n    \n- Update course information\n    \n- Delete courses\n    \n- List all available courses"
+		},
+		{
+			"name": "course-materials",
+			"item": [
+				{
+					"name": "List course-materials",
+					"id": "47455886-ef8cd045-62b6-474b-a3dc-558f37637243",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course-materials/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create course-materials",
+					"id": "47455886-10612243-bf33-455d-bcb5-b7b6cd68b616",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"uuid": "21f74df0-baa2-49df-a25e-ee76e5df772b",
+									"src": [
+										"/D:/school/300lvl 2nd semester/CHG 343 Thermodynamics/CHG 343 EOS Topics.docx",
+										"/D:/school/300lvl 2nd semester/CHG 343 Thermodynamics/CHG 343 EOS Topics.docx"
+									]
+								},
+								{
+									"key": "title",
+									"value": "Chemical thermodynamics",
+									"type": "text",
+									"uuid": "ac6fd569-f669-4e4f-9df2-5e70b9e6f4dd"
+								},
+								{
+									"key": "course",
+									"value": "1",
+									"type": "text",
+									"uuid": "2c09b884-e933-4093-a8e0-c1ae052f57ef"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/course-materials/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d"
+		},
+		{
+			"name": "assignments",
+			"item": [],
+			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36"
+		},
+		{
+			"name": "submissions",
+			"item": [],
+			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041"
+		},
+		{
+			"name": "lessons",
+			"item": [],
+			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
+		},
+		{
+			"name": "progress",
+			"item": [],
+			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
+		}
+	]
+}
