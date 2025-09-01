@@ -1,10 +1,23 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
+class User(AbstractUser):
+    # the different types of roles/users  avaliable
+    ROLE_CHOICES = (
+        ('teacher', 'Teacher'),
+        ('student', 'Student'),
+        ('guest', 'Guest'),
+        ('admin', 'Admin'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='guest')
+
+    def __str__(self):
+        return f"{self.username} ({self.role})"
+
 
 class Teacher(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     specialization = models.CharField(max_length=100)
     experience = models.IntegerField(help_text="Years of teaching experience")
@@ -13,12 +26,11 @@ class Teacher(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.user.get_full_name() or self.user.username
 
 
 class Student(models.Model):
-    name = models.CharField(max_length = 50)
-    email = models.EmailField(unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.IntegerField()
     enrolled_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default = True)
@@ -26,7 +38,7 @@ class Student(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.user.get_full_name() or self.user.username
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
@@ -71,7 +83,10 @@ class Assignment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
+    class Meta:
+        permissions = [
+            ("grade_assignment", "Can grade assignments")
+        ]
     def __str__(self):
         return f"{self.title} ({self.course.title})"
 
@@ -86,7 +101,7 @@ class Submission(models.Model):
 
 
     def __str__(self):
-        return f"{self.student.name} - {self.assignment.title}" 
+        return f"{self.student.user.get_full_name()} - {self.assignment.title}" 
 
 
 class Lesson(models.Model):
