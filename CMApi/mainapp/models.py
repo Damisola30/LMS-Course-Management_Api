@@ -1,23 +1,10 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
-class User(AbstractUser):
-    # the different types of roles/users  avaliable
-    ROLE_CHOICES = (
-        ('teacher', 'Teacher'),
-        ('student', 'Student'),
-        ('guest', 'Guest'),
-        ('admin', 'Admin'),
-    )
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='guest')
-
-    def __str__(self):
-        return f"{self.username} ({self.role})"
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     specialization = models.CharField(max_length=100)
     experience = models.IntegerField(help_text="Years of teaching experience")
@@ -30,7 +17,7 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     age = models.IntegerField()
     enrolled_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default = True)
@@ -129,7 +116,7 @@ class Progress(models.Model):
         ordering = ['created_at']
 
     def __str__(self):
-        return f"{self.student.name} - {self.lesson.title}"
+        return f"{self.student.user.get_full_name() or self.student.user.username} - {self.lesson.title}"
 
 
 
