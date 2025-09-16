@@ -7,6 +7,8 @@ from django.apps import apps
 # mapping role_name -> { model_label: [permcodenames] }
 ROLE_MAP = {
     "Teacher": {
+        "mainapp.teacher": ["view_teacher", "change_teacher"],
+        "mainapp.student": ["view_students"],
         "mainapp.course": ["view_course", "add_course", "change_course", "delete_course"],
         "mainapp.lesson": ["view_lesson", "add_lesson", "change_lesson", "delete_lesson"],
         "mainapp.assignment": ["view_assignment", "add_assignment", "change_assignment", "delete_assignment", "grade_assignment"],
@@ -14,6 +16,7 @@ ROLE_MAP = {
         "mainapp.progress": ["view_progress", "change_progress"],
     },
     "Student": {
+        "mainapp.student": ["view_student", "change_student"],
         "mainapp.course": ["view_course"],
         "mainapp.lesson": ["view_lesson"],
         "mainapp.assignment": ["view_assignment"],
