@@ -5,13 +5,17 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, 
 from .models import Teacher, Student, Course, CourseMaterial, Assignment, Submission, Lesson, Progress
 from .serializers import (
     TeacherSerializer, StudentSerializer, CourseSerializer, CourseMaterialSerializer,
-    AssignmentSerializer, SubmissionSerializer, LessonSerializer, ProgressSerializer
+    AssignmentSerializer, SubmissionSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer
 )
 from .permissions import (
     IsCourseOwnerOrReadOnly,
     IsOwnSubmissionOrCourseTeacher,
     IsOwnProgressOrCourseTeacher,
+    IsOwnProfileOrAdmin,
 )
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 # Teacher and Student viewsets: use DjangoModelPermissions so admin/perm-coded users can manage them.
 # In many designs Teacher/Student creation happens via registration (accounts app) so you may only
@@ -19,7 +23,7 @@ from .permissions import (
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
         user = self.request.user
@@ -30,12 +34,22 @@ class TeacherViewSet(viewsets.ModelViewSet):
             return Teacher.objects.filter(pk=user.teacher.pk)
         # admins, staff or those with view_teacher perm would be allowed by DjangoModelPermissions
         return Teacher.objects.none()
+    
+    @action(detail=True, methods=["patch"], url_path="user_details")
+    def update_user_details(self, request, pk=None):
+        teacher = self.get_object()
+        user = teacher.user
+        serializer = UserDetailsSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
         user = self.request.user
@@ -44,6 +58,17 @@ class StudentViewSet(viewsets.ModelViewSet):
         if hasattr(user, "student"):
             return Student.objects.filter(pk=user.student.pk)
         return Student.objects.none()
+    
+    @action(detail=True, methods=["patch"], url_path="user_details")
+    def update_user_details(self, request, pk=None):
+        teacher = self.get_object()
+        user = Student.user
+        serializer = UserDetailsSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class CourseViewSet(viewsets.ModelViewSet):

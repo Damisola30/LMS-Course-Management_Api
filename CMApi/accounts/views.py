@@ -6,12 +6,15 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from rest_framework.permissions import IsAdminUser
+#from django.urls import reverse_lazy
+
 
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
+    # success_url = reverse_lazy('token_obtain_pair')
 
 
 class ChangeUserRoleView(APIView):

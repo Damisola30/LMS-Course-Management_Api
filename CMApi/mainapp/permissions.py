@@ -48,3 +48,22 @@ class IsOwnProgressOrCourseTeacher(BasePermission):
         if student and obj.student_id == student.id:
             return True
         return False
+
+class IsOwnProfileOrAdmin(BasePermission):
+    """
+    Allow access to the object if the user is the owner (user==obj.user)
+    or if the user is superuser/staff.
+    READ is allowed to authenticated users (or change as you prefer).
+    """
+    def has_object_permission(self, request, view, obj):
+        # superuser or staff bypass
+        if request.user and request.user.is_superuser:
+            return True
+
+        # read methods allowed if you want (or restrict)
+        if request.method in SAFE_METHODS:
+            return True
+
+        # obj is either Teacher or Student instance with .user relation
+        owner = getattr(obj, "user", None)
+        return owner is not None and owner == request.user
