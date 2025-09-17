@@ -42,7 +42,84 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "47455886-4af11f8d-be61-4803-a1fa-c86417d8d86b",
+							"name": "Register User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/accounts/register/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts",
+										"register",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 17 Sep 2025 23:27:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "108"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"username\": \"teacher1\",\n    \"email\": \"t1@example.com\",\n    \"first_name\": \"Alice\",\n    \"last_name\": \"Teacher\",\n    \"role\": \"teacher\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Login",
