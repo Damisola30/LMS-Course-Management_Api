@@ -131,6 +131,7 @@
 								"exec": [
 									"let data = pm.response.json();\r",
 									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)\r",
 									""
 								],
 								"type": "text/javascript",
