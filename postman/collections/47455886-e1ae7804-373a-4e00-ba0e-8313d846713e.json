@@ -8,7 +8,20 @@
 	"item": [
 		{
 			"name": "Account",
-			"item": [],
+			"item": [
+				{
+					"name": "Register",
+					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c"
 		},
 		{
@@ -584,18 +597,6 @@
 			"name": "progress",
 			"item": [],
 			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
-		},
-		{
-			"name": "Register",
-			"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
 		}
 	]
 }
