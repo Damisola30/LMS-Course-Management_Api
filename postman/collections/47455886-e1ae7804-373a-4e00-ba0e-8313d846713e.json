@@ -10,7 +10,7 @@
 			"name": "Account",
 			"item": [
 				{
-					"name": "Register",
+					"name": "Register User",
 					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
