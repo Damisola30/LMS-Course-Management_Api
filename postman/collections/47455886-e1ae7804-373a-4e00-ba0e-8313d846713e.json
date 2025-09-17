@@ -368,7 +368,7 @@
 			"description": "Endpoints for managing student records.\n\n**Includes:**\n\n- Add new students\n    \n- Retrieve student details by ID\n    \n- Update student information\n    \n- Delete student records\n    \n- List all students"
 		},
 		{
-			"name": "courses",
+			"name": "Courses",
 			"item": [
 				{
 					"name": "List courses",
