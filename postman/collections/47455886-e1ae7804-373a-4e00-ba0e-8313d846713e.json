@@ -229,7 +229,7 @@
 			"description": "Endpoints for managing teacher records.\n\n**Includes:**\n\n- Create new teachers\n    \n- Retrieve teacher details by ID\n    \n- Update teacher information\n    \n- Delete teacher records\n    \n- List all teachers"
 		},
 		{
-			"name": "students",
+			"name": "Students",
 			"item": [
 				{
 					"name": "List students",
