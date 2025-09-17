@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, 
 from .models import Teacher, Student, Course, CourseMaterial, Assignment, Submission, Lesson, Progress
 from .serializers import (
     TeacherSerializer, StudentSerializer, CourseSerializer, CourseMaterialSerializer,
-    AssignmentSerializer, SubmissionSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer
+    AssignmentSerializer, SubmissionStudentSerializer, SubmissionTeacherSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer
 )
 from .permissions import (
     IsCourseOwnerOrReadOnly,
@@ -16,7 +16,8 @@ from .permissions import (
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.utils import timezone
+from rest_framework.exceptions import PermissionDenied
 # Teacher and Student viewsets: use DjangoModelPermissions so admin/perm-coded users can manage them.
 # In many designs Teacher/Student creation happens via registration (accounts app) so you may only
 # need list/retrieve for normal users. Keeping DjangoModelPermissions allows fine-grained control.
@@ -159,30 +160,76 @@ class AssignmentViewSet(viewsets.ModelViewSet):
 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
-    queryset = Submission.objects.select_related("assignment__course").all()
-    serializer_class = SubmissionSerializer
-    # Object-level permission ensures students can edit their own submissions and
-    # teachers of the course can view/grade them.
+    queryset = Submission.objects.select_related("assignment__course", "student__user").all()
+    # Use object-level permission plus model perms
     permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnSubmissionOrCourseTeacher]
+
+    def get_serializer_class(self):
+        user = self.request.user
+        # superusers and teachers of the course should get teacher serializer
+        if user.is_superuser or hasattr(user, "teacher"):
+            return SubmissionTeacherSerializer
+        # students use the student serializer
+        return SubmissionStudentSerializer
 
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
             return self.queryset
         if hasattr(user, "teacher"):
+            # teacher sees submissions for their courses
             return self.queryset.filter(assignment__course__instructor=user.teacher)
         if hasattr(user, "student"):
+            # student sees only their submissions
             return self.queryset.filter(student=user.student)
         return Submission.objects.none()
 
     def perform_create(self, serializer):
-        # Associate new submission with the logged-in student
-        student = getattr(self.request.user, "student", None)
-        if student:
-            serializer.save(student=student)
+        """
+        When a student creates a submission, attach their Student profile as owner.
+        Teachers/admins might create submissions on behalf of a student (rare) — adjust if you disallow that.
+        """
+        user = self.request.user
+        if hasattr(user, "student"):
+            serializer.save(student=user.student)
         else:
-            serializer.save()
+            # if teacher/admin creating via teacher serializer they must pass student explicitly,
+            # but we can prevent teacher from creating submissions by raising PermissionDenied if desired.
+            raise PermissionDenied({"detail": "Only students can create submissions."})
 
+    def update(self, request, *args, **kwargs):
+        """
+        Override update so we can enforce:
+        - students can only change their own submission and only certain fields (handled by serializer),
+          optionally only before assignment due_date.
+        - teachers can only change grade (serializer allows it), but still object-level perm checked.
+        """
+        instance = self.get_object()
+        user = request.user
+
+        # If user is student: ensure they're owner (permission class already checks), optionally check deadline
+        if hasattr(user, "student") and instance.student_id == user.student.id:
+            # optional deadline check: disallow student edits after assignment due_date
+            due = getattr(instance.assignment, "due_date", None)
+            if due:
+                now = timezone.now()
+                # if due is timezone-aware and not comparable, adjust; assuming both timezone-aware
+                if now > due:
+                    raise PermissionDenied({"detail": "Cannot modify submission after the assignment due date."})
+            # proceed normally (serializer will prevent grade changes)
+            return super().update(request, *args, **kwargs)
+
+        # If user is teacher of this course:
+        if hasattr(user, "teacher") and instance.assignment.course.instructor_id == user.teacher.id:
+            # allow teacher editing (it will use Teacher serializer which permits grade writes)
+            return super().update(request, *args, **kwargs)
+
+        # Allow superuser
+        if user.is_superuser:
+            return super().update(request, *args, **kwargs)
+
+        # Otherwise deny
+        raise PermissionDenied({"detail": "You do not have permission to modify this submission."})
 
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()

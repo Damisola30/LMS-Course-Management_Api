@@ -48,10 +48,33 @@ class AssignmentSerializer(serializers.ModelSerializer):
         model = Assignment
         fields = '__all__'
 
-class SubmissionSerializer(serializers.ModelSerializer):
+
+class SubmissionTeacherSerializer(serializers.ModelSerializer):
+    """
+    For teachers/admins: full view + teacher can set grade.
+    """
+    student = serializers.PrimaryKeyRelatedField(read_only=True)
+    assignment = serializers.PrimaryKeyRelatedField(queryset=Assignment.objects.all())
+
     class Meta:
         model = Submission
-        fields = '__all__'
+        # allow grade writable for teachers
+        fields = ["id", "assignment", "student", "file", "submitted_at", "grade", "created_at", "updated_at"]
+        read_only_fields = ["id", "submitted_at", "created_at", "updated_at"]
+
+
+class SubmissionStudentSerializer(serializers.ModelSerializer):
+    """
+    For students: they can create a submission and update only the 'file' (and maybe replace it).
+    grade is read-only here.
+    """
+    student = serializers.PrimaryKeyRelatedField(read_only=True)
+    assignment = serializers.PrimaryKeyRelatedField(queryset=Assignment.objects.all())
+
+    class Meta:
+        model = Submission
+        fields = ["id", "assignment", "student", "file", "submitted_at", "grade", "created_at", "updated_at"]
+        read_only_fields = ["id", "student", "submitted_at", "grade", "created_at", "updated_at"]
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
