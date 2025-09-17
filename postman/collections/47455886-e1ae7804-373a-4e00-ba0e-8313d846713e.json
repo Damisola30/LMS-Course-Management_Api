@@ -46,7 +46,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Change User Role",
 					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
