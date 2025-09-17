@@ -503,11 +503,6 @@
 			"description": "Endpoints for managing course records.\n\n**Includes:**\n\n- Create new courses\n    \n- Retrieve course details by ID\n    \n- Update course information\n    \n- Delete courses\n    \n- List all available courses"
 		},
 		{
-			"name": "lessons",
-			"item": [],
-			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
-		},
-		{
 			"name": "course-materials",
 			"item": [
 				{
@@ -582,6 +577,11 @@
 				}
 			],
 			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d"
+		},
+		{
+			"name": "lessons",
+			"item": [],
+			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
 		},
 		{
 			"name": "assignments",
