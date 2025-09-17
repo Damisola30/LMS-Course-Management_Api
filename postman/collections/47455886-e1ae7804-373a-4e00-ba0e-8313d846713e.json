@@ -16,8 +16,31 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"register",
+								""
+							]
+						}
 					},
 					"response": []
 				},
