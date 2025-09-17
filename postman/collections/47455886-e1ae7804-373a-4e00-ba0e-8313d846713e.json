@@ -123,6 +123,21 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
