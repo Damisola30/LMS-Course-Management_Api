@@ -385,11 +385,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Further Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
+							"raw": "{\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Further Mathematics\",\r\n    \"experience\": 7,\r\n    \"is_active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
