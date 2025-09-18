@@ -526,7 +526,29 @@
 					"response": []
 				},
 				{
-					"name": "Create students",
+					"name": "Retrieve Student data",
+					"id": "47455886-579fdd15-fdd9-451c-9201-05a151e046d0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student User Details",
 					"id": "47455886-6d5eae65-d96d-45f6-a54a-c3fd010abec6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -551,28 +573,6 @@
 							"path": [
 								"students",
 								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Retrieve Student data",
-					"id": "47455886-579fdd15-fdd9-451c-9201-05a151e046d0",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/students/2",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"students",
-								"2"
 							]
 						}
 					},
