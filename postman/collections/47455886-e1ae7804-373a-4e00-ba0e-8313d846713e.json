@@ -585,11 +585,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrimet@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"Student3@gmail.com\",\r\n    \"first_name\": \"Bumi\",\r\n    \"last_name\": \"Adefowo\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -597,12 +607,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/students/",
+							"raw": "{{base_url}}/students/3/user_details/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"students",
+								"3",
+								"user_details",
 								""
 							]
 						}
