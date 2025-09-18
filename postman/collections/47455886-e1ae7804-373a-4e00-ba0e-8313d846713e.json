@@ -251,7 +251,7 @@
 			"name": "Teachers",
 			"item": [
 				{
-					"name": "List teachers",
+					"name": "List Teachers",
 					"id": "47455886-c422b8d7-8905-4066-91bd-0f487368ee0a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
