@@ -427,11 +427,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
+							"raw": "{\r\n    \"email\" : \"T1@example.com\",\r\n    \"first_name\": \"Alice\",\r\n    \"last_name\": \"Hudson\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -439,12 +449,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/teachers/",
+							"raw": "{{base_url}}/teachers/4/user_details/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
+								"4",
+								"user_details",
 								""
 							]
 						}
