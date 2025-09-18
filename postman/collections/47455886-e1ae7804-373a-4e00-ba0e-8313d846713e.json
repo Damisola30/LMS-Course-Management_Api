@@ -755,12 +755,13 @@
 							"raw": "\r\n"
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/",
+							"raw": "{{base_url}}/courses/2/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"courses",
+								"2",
 								""
 							]
 						}
