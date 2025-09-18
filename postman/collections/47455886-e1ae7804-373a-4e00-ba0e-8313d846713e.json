@@ -357,7 +357,7 @@
 					]
 				},
 				{
-					"name": "Create teachers",
+					"name": "Update Teachers User Details",
 					"id": "47455886-6ed99fc5-32f1-44ef-98d2-682a1ba28936",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
