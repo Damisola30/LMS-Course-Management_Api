@@ -357,7 +357,7 @@
 					]
 				},
 				{
-					"name": "Retrieve teachers",
+					"name": "Retrieve Teacher",
 					"id": "47455886-0fbcb2a5-1d94-4eeb-8783-8ae800239e54",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
