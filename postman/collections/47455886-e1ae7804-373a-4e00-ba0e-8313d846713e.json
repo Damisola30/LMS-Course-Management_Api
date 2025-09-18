@@ -711,7 +711,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Intro to Drilling\",\r\n  \"description\": \"Basics of drilling operations\",\r\n  \"instructor\": null,\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": false,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 90,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Engineering\",\r\n  \"level\": \"beginner\",\r\n  \"students\": []\r\n}",
+							"raw": "{\r\n  \"title\": \"Intro to Drilling 2\",\r\n  \"description\": \"Advanced Drilling Operations\",\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": true,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 70,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Advanced Peroleum Engineering\",\r\n  \"level\": \"intermediate\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
