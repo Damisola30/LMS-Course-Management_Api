@@ -379,6 +379,37 @@
 					"response": []
 				},
 				{
+					"name": "Update Teachers User Details",
+					"id": "47455886-6ed99fc5-32f1-44ef-98d2-682a1ba28936",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update teachers",
 					"id": "47455886-fa79a5ca-a59e-4bce-874c-2fae6e53dd42",
 					"protocolProfileBehavior": {
@@ -806,37 +837,6 @@
 			"name": "progress",
 			"item": [],
 			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
-		},
-		{
-			"name": "Update Teachers User Details",
-			"id": "47455886-6ed99fc5-32f1-44ef-98d2-682a1ba28936",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Emily Johnson\",\r\n    \"email\": \"emily.johnson@example2.com\",\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Mathematics\",\r\n    \"experience\": 8,\r\n    \"is_active\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/teachers/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"teachers",
-						""
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
