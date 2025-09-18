@@ -207,8 +207,40 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"admin",
+								"change-role",
+								"teacher1",
+								""
+							]
+						}
 					},
 					"response": []
 				}
