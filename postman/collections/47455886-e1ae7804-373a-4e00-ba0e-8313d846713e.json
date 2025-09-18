@@ -548,37 +548,6 @@
 					"response": []
 				},
 				{
-					"name": "Update Student User Details",
-					"id": "47455886-6d5eae65-d96d-45f6-a54a-c3fd010abec6",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrimet@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/students/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"students",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Update student data",
 					"id": "47455886-429c0eb5-6fd8-4e65-b0b2-3c000d1c7fc0",
 					"protocolProfileBehavior": {
@@ -604,6 +573,37 @@
 							"path": [
 								"students",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student User Details",
+					"id": "47455886-6d5eae65-d96d-45f6-a54a-c3fd010abec6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"David Wilson\",\r\n    \"email\": \"david.wilsonrimet@example.com\",\r\n    \"age\": 22,\r\n    \"is_active\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								""
 							]
 						}
 					},
