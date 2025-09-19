@@ -1635,7 +1635,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update Submission",
 					"id": "47455886-d3590d26-e489-491f-abca-58bbd7a15e17",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
