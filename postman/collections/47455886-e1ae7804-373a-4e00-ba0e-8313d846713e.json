@@ -958,6 +958,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -967,14 +977,11 @@
 									"key": "file",
 									"type": "file",
 									"uuid": "21f74df0-baa2-49df-a25e-ee76e5df772b",
-									"src": [
-										"/D:/school/300lvl 2nd semester/CHG 343 Thermodynamics/CHG 343 EOS Topics.docx",
-										"/D:/school/300lvl 2nd semester/CHG 343 Thermodynamics/CHG 343 EOS Topics.docx"
-									]
+									"value": null
 								},
 								{
 									"key": "title",
-									"value": "Chemical thermodynamics",
+									"value": "Drilling Basics PDF",
 									"type": "text",
 									"uuid": "ac6fd569-f669-4e4f-9df2-5e70b9e6f4dd"
 								},
@@ -983,6 +990,12 @@
 									"value": "1",
 									"type": "text",
 									"uuid": "2c09b884-e933-4093-a8e0-c1ae052f57ef"
+								},
+								{
+									"key": "description",
+									"value": "Lecture slides and notes for Week 1.",
+									"type": "text",
+									"uuid": "5b0c2e8e-8a7c-4700-a837-cef523509d3d"
 								}
 							]
 						},
