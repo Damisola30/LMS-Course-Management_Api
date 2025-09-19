@@ -939,7 +939,20 @@
 		},
 		{
 			"name": "lessons",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "47455886-c0920b59-4182-4fd0-9b69-91064de4b51b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
 		},
 		{
