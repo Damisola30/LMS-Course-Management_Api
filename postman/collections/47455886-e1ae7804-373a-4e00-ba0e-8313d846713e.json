@@ -1864,7 +1864,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update Progress",
 					"id": "47455886-ac09080f-85e9-4e90-b459-d65d0857f267",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
