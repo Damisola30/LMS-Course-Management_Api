@@ -1183,7 +1183,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\r\n  \"title\": \"Lesson 1: Introduction to Drilling\",\r\n  \"content\": \"This lesson explains the drilling rig structure and safety.\",\r\n  \"order\" : \"2\",\r\n  \"course\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{base_url}}/lessons/",
