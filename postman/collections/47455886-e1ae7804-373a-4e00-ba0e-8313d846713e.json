@@ -1482,7 +1482,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Assignment",
 					"id": "47455886-17c6a822-5fc6-4aae-915f-ea268364fd0e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
