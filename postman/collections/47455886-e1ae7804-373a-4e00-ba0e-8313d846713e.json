@@ -1163,7 +1163,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create Lesson",
 					"id": "47455886-5016f906-c4ed-4d4c-9da2-2e6174998026",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
