@@ -1440,7 +1440,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update Assignment",
 					"id": "47455886-0ea70318-6b08-4c54-9ee1-06a2add7af99",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
