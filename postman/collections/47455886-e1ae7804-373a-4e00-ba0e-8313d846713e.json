@@ -421,13 +421,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/teachers/4/",
+							"raw": "{{base_url}}/teachers/1/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"4",
+								"1",
 								""
 							]
 						}
