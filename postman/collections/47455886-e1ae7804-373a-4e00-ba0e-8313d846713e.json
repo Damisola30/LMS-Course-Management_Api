@@ -1362,7 +1362,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create Assignment",
 					"id": "47455886-84c32331-a5d2-449c-8acc-6beca54515f9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
