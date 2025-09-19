@@ -1000,7 +1000,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update Course-Material",
 					"id": "47455886-39cad9f8-0487-4943-a92b-37e7e3a3b126",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
