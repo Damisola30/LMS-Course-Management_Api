@@ -1557,7 +1557,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create Submission",
 					"id": "47455886-12840f99-77e6-450f-be80-648f56ef41e6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
