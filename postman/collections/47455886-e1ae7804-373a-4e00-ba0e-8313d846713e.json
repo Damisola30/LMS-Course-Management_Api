@@ -1677,7 +1677,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Submission-Teacher",
+					"name": "Grade Submission-Teacher",
 					"id": "47455886-043e5750-0ec5-464d-aa33-2960d6c48150",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
