@@ -1199,7 +1199,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Lesson",
 					"id": "47455886-1a65db09-82f2-46ef-8519-26edd7cc6db0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
