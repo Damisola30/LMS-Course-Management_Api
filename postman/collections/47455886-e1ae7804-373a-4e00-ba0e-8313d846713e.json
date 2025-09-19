@@ -1094,8 +1094,29 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course-materials/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								"1",
+								""
+							]
+						}
 					},
 					"response": []
 				}
