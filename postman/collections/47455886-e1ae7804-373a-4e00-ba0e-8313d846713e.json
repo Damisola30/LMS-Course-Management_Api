@@ -148,7 +148,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"teacher1\",\r\n    \"password\" : \"pass123\"\r\n}",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
