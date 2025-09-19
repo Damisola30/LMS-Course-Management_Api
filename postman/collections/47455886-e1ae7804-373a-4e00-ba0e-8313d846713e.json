@@ -1403,7 +1403,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Assignment",
 					"id": "47455886-ce4e3a79-920c-4a1d-b3e6-6c31c328f7c1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
