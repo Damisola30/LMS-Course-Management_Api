@@ -1012,7 +1012,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Course-Material",
 					"id": "47455886-47060e8b-d577-4498-a58a-6d1a4ae50795",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
