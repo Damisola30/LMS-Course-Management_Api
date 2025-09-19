@@ -170,6 +170,20 @@
 				},
 				{
 					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b0143a07-5812-4646-8ff4-94afa29e7214",
+								"exec": [
+									"let data = pm.response.json()\r",
+									"pm.environment.set(\"access_token\", data.access)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "47455886-e054c2dc-083e-4410-b674-da3c2c4dfd86",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
