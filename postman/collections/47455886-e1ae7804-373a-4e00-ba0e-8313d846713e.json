@@ -1368,8 +1368,37 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Assignment 1: Rig Components\",\r\n  \"description\": \"Identify and explain the main rig components.\",\r\n  \"course\": 1,\r\n  \"due_date\": \"2025-10-01T23:59:00Z\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/assingnments/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assingnments",
+								""
+							]
+						}
 					},
 					"response": []
 				}
