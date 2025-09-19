@@ -1064,7 +1064,20 @@
 		},
 		{
 			"name": "submissions",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "47455886-f110e4b7-d7f8-46c0-a4ba-b9c49017fcd9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041"
 		},
 		{
