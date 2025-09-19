@@ -1390,12 +1390,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/assingnments/",
+							"raw": "{{base_url}}/assignments/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"assingnments",
+								"assignments",
 								""
 							]
 						}
