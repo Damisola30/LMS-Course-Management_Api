@@ -1446,8 +1446,38 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"due_date\": \"2025-10-05T23:59:00Z\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								"1",
+								""
+							]
+						}
 					},
 					"response": []
 				}
