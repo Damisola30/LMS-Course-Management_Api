@@ -1831,7 +1831,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Progress",
 					"id": "47455886-a25f9325-3b57-4887-8789-2ca774a68349",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
