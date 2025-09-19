@@ -1033,7 +1033,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"description\": \"Updated: Includes latest figures and charts.\"\r\n}\r\n",
+							"raw": "{\r\n  \"title\": \"Drilling Basics PDF-2 \"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1041,12 +1041,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/course-materials/",
+							"raw": "{{base_url}}/course-materials/1/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"course-materials",
+								"1",
 								""
 							]
 						}
