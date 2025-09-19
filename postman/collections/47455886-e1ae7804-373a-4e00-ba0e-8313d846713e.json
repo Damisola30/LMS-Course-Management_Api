@@ -1084,14 +1084,34 @@
 			"name": "progress",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "List Progress",
 					"id": "47455886-ecafe9ab-21cd-4f5e-ae4c-4255c1a3c4c5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/progress/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								""
+							]
+						}
 					},
 					"response": []
 				}
