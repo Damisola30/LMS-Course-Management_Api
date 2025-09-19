@@ -957,7 +957,20 @@
 		},
 		{
 			"name": "assignments",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "47455886-146f017c-fa63-42cb-8709-6f95e4ea0ba5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36"
 		},
 		{
