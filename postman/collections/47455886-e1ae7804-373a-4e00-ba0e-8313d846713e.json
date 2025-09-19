@@ -1024,7 +1024,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Course-Material",
 					"id": "47455886-df6025af-189f-40d9-a913-349c9b406ac6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
