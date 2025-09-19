@@ -1006,6 +1006,18 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-47060e8b-d577-4498-a58a-6d1a4ae50795",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
 						"method": "GET",
 						"header": []
 					},
