@@ -1598,7 +1598,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retrieve Submission",
 					"id": "47455886-e0c6d9fb-fea9-4b16-a995-a9ba8e43bfa1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
