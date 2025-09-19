@@ -1236,14 +1236,25 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update Lesson",
 					"id": "47455886-ecf6384e-9d5e-4bf3-94a8-0733ae594c7c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/lessons/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"1",
+								""
+							]
+						}
 					},
 					"response": []
 				}
