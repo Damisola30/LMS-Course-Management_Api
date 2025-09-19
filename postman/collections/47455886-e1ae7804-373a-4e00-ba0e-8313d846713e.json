@@ -1265,8 +1265,33 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"1",
+								""
+							]
+						}
 					},
 					"response": []
 				}
