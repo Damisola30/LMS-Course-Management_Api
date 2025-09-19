@@ -1048,7 +1048,7 @@
 			"name": "assignments",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "List Assingments",
 					"id": "47455886-fc211578-9472-4e50-9f01-d4a05d3b8d75",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
