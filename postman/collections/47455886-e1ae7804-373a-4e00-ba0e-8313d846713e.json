@@ -1066,7 +1066,7 @@
 			"name": "submissions",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "List Submissions",
 					"id": "47455886-f110e4b7-d7f8-46c0-a4ba-b9c49017fcd9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
