@@ -1259,7 +1259,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Lesson",
 					"id": "47455886-8e065f2b-5830-4c77-b2c7-f2366eef4145",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
