@@ -1006,7 +1006,7 @@
 			"name": "lessons",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "List Lessons",
 					"id": "47455886-c0920b59-4182-4fd0-9b69-91064de4b51b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
