@@ -33,11 +33,31 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = '__all__'
 
-class CourseSerializer(serializers.ModelSerializer):    
+class CourseSerializer(serializers.ModelSerializer):   
+    instructor = serializers.PrimaryKeyRelatedField(read_only=True)  # client cannot set
+    students = serializers.PrimaryKeyRelatedField(many=True, required=False, queryset=Student.objects.all())
+ 
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = [
+            "id", "title", "description", "instructor", "students",
+            "start_date", "end_date", "duration", "is_active",
+            "created_at", "updated_at", "summary", "category", "level"
+        ]
+    def validate(self, attrs):
+        # Ensuring end_date >= start_date
+        start = attrs.get("start_date") or getattr(self.instance, "start_date", None)
+        end = attrs.get("end_date") or getattr(self.instance, "end_date", None)
+        if start and end and end < start:
+            raise serializers.ValidationError("end_date must be the same or after start_date.")
+        return attrs
 
+
+    def validate_title(self, value):
+        if Course.objects.filter(title=value).exists():
+            raise serializers.ValidationError("A course with this title already exists.")
+        return value
+    
 class CourseMaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseMaterial

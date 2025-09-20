@@ -62,8 +62,8 @@ class StudentViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=["patch"], url_path="user_details")
     def update_user_details(self, request, pk=None):
-        teacher = self.get_object()
-        user = Student.user
+        student = self.get_object()
+        user = student.user
         serializer = UserDetailsSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -89,15 +89,49 @@ class CourseViewSet(viewsets.ModelViewSet):
         if hasattr(user, "student"):
             return Course.objects.filter(students=user.student)
         return Course.objects.none()
-
+    
+    def _request_includes_instructor(self):
+        """
+        Helper: checks whether the raw request payload included an instructor field.
+        We use request.data (works for JSON/form/multipart).
+        """
+        return 'instructor' in (self.request.data or {})
+    
     def perform_create(self, serializer):
-        # set instructor automatically to the logged-in teacher (if any)
-        teacher = getattr(self.request.user, "teacher", None)
-        if teacher:
-            serializer.save(instructor=teacher)
-        else:
-            # fallback: allow creation but without instructor (admins can create)
-            serializer.save()
+        user = self.request.user
+
+        # If a teacher is creating, forbid them from supplying instructor explicitly.
+        # (Either ignore it quietly or raise an error — here we raise to be explicit.)
+        if hasattr(user, "teacher"):
+            if self._request_includes_instructor():
+                raise PermissionDenied("You may not set the instructor manually. The instructor will be set to your account.")
+            serializer.save(instructor=user.teacher)
+            return
+
+        # Admins: allow supplying an instructor explicitly (or leave None)
+        if user.is_superuser:
+            instructor = serializer.validated_data.get("instructor", None)
+            serializer.save(instructor=instructor)
+            return
+
+        # Others are not allowed to create courses
+        raise PermissionDenied("Only teachers or admins can create courses.")
+
+    def update(self, request, *args, **kwargs):
+        """
+        Handles both PUT and PATCH (DRF calls update for both).
+        Disallow an instructor user from changing the course's instructor field.
+        Admins are allowed.
+        """
+        user = request.user
+
+        # If the user is a teacher (instructor), block any attempt to change instructor
+        if hasattr(user, "teacher"):
+            if self._request_includes_instructor():
+                # explicit message
+                raise PermissionDenied("You cannot change the course instructor. Contact an admin to change the instructor.")
+        # If user is superuser, allow changes (default flow)
+        return super().update(request, *args, **kwargs)
 
 
 class CourseMaterialViewSet(viewsets.ModelViewSet):
@@ -185,16 +219,11 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         return Submission.objects.none()
 
     def perform_create(self, serializer):
-        """
-        When a student creates a submission, attach their Student profile as owner.
-        Teachers/admins might create submissions on behalf of a student (rare) — adjust if you disallow that.
-        """
+        # When a student creates a submission, attach their Student profile as owner.
         user = self.request.user
         if hasattr(user, "student"):
             serializer.save(student=user.student)
         else:
-            # if teacher/admin creating via teacher serializer they must pass student explicitly,
-            # but we can prevent teacher from creating submissions by raising PermissionDenied if desired.
             raise PermissionDenied({"detail": "Only students can create submissions."})
 
     def update(self, request, *args, **kwargs):

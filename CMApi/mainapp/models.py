@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from accounts.models import User
 # Create your models here.
 
 
@@ -15,7 +16,7 @@ class Teacher(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
-
+# Student model representing a student(User-Group) in the LMS
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     age = models.IntegerField()
@@ -27,8 +28,9 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
+# Course model representing a course in the LMS
 class Course(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     instructor = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
     students = models.ManyToManyField(Student, related_name='courses', blank=True)
@@ -49,6 +51,7 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+# CourseMaterial model representing materials for courses
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name = "materials")
     title = models.CharField(max_length=100)
@@ -59,9 +62,9 @@ class CourseMaterial(models.Model):
 
     
     def __str__(self):
-        return self .title
+        return self.title
     
-
+# Assignment model representing assignments for courses
 class Assignment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="assignments")
     title = models.CharField(max_length=100)
@@ -77,6 +80,7 @@ class Assignment(models.Model):
     def __str__(self):
         return f"{self.title} ({self.course.title})"
 
+# Submission model representing student submissions for assignments
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name="submissions")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -90,7 +94,7 @@ class Submission(models.Model):
     def __str__(self):
         return f"{self.student.user.get_full_name()} - {self.assignment.title}" 
 
-
+# Lesson model representing individual lessons within a course
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="lessons")
     title = models.CharField(max_length=100)
@@ -104,9 +108,10 @@ class Lesson(models.Model):
     def __str__(self):
         return self.title
 
+# Progress model to track lesson completion by students
 class Progress(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE) 
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
