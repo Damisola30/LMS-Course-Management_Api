@@ -18,7 +18,7 @@
 								"id": "a0291831-dfd7-400f-b64e-8f9615c7ac5e",
 								"exec": [
 									"let data = pm.response.json();\r",
-									"pm.environment.set(\"Api_Key\", data.api_key);"
+									"pm.environment.set(\"api_key\", data.key);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -42,14 +42,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/api-key/create/",
+							"raw": "{{base_url}}/accounts/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"accounts",
 								"api-key",
-								"create",
 								""
 							]
 						}
