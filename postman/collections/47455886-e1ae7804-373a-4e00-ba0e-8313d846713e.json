@@ -305,7 +305,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Get Api_Key",
 					"event": [
 						{
 							"listen": "test",
