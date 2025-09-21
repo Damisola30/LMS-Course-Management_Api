@@ -10,6 +10,53 @@
 			"name": "Account",
 			"item": [
 				{
+					"name": "Create Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a0291831-dfd7-400f-b64e-8f9615c7ac5e",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"Api_Key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"testworksapce1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/create/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register User",
 					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
 					"protocolProfileBehavior": {
@@ -1940,53 +1987,6 @@
 				}
 			],
 			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
-		},
-		{
-			"name": "Create Api_Key",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a0291831-dfd7-400f-b64e-8f9615c7ac5e",
-						"exec": [
-							"let data = pm.response.json();\r",
-							"pm.environment.set(\"Api_Key\", data.api_key);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\" : \"testworksapce1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/accounts/api-key/create/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"accounts",
-						"api-key",
-						"create",
-						""
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
