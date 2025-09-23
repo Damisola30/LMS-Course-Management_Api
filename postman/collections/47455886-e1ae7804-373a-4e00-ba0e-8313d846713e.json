@@ -384,20 +384,26 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"key": "workspace",
+								"value": "{{api_key}}",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/teachers/",
+							"raw": "{{base_url}}/teachers/?workspace={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
 								""
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
