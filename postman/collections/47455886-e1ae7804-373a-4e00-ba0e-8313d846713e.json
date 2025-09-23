@@ -15,10 +15,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a0291831-dfd7-400f-b64e-8f9615c7ac5e",
+								"id": "73020d75-6bcd-4868-81fd-c017a325c3e7",
 								"exec": [
 									"let data = pm.response.json();\r",
-									"pm.environment.set(\"api_key\", data.key);"
+									"pm.environment.set(\"api_key\", data.api_key);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"testworksapce1\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"testworksapce2\",\r\n    \"hours\" :\"2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,13 +42,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/api-key/",
+							"raw": "{{base_url}}/accounts/api-key/create/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"accounts",
 								"api-key",
+								"create",
 								""
 							]
 						}
@@ -123,7 +124,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/register/",
+							"raw": "{{base_url}}/accounts/register/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -131,6 +132,13 @@
 								"accounts",
 								"register",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
