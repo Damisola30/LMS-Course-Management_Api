@@ -81,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"testworksapce1\"\r\n}",
+							"raw": "{\r\n    \"username\": \"testworksapce2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
