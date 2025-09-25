@@ -103,6 +103,44 @@
 					"response": []
 				},
 				{
+					"name": "Seed Workspace",
+					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"teacher_count\": 2,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dev",
+								"seed",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "List Users",
 					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
 					"protocolProfileBehavior": {
@@ -382,44 +420,6 @@
 								"change-role",
 								"teacher1",
 								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Seed Workspace",
-					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \r\n    \"teacher_count\": 2,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"seed",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
-								}
 							]
 						}
 					},
