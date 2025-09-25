@@ -2,31 +2,41 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAdminUser
-from .models import Teacher, Student, Course, CourseMaterial, Assignment, Submission, Lesson, Progress
+from .models import Teacher, Student, Course, CourseMaterial, Assignment, Submission, Lesson, Progress, Guest
 from .serializers import (
     TeacherSerializer, StudentSerializer, CourseSerializer, CourseMaterialSerializer,
-    AssignmentSerializer, SubmissionStudentSerializer, SubmissionTeacherSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer
+    AssignmentSerializer, SubmissionStudentSerializer, SubmissionTeacherSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer,UserSummarySerializer
 )
 from .permissions import (
     IsCourseOwnerOrReadOnly,
     IsOwnSubmissionOrCourseTeacher,
     IsOwnProgressOrCourseTeacher,
     IsOwnProfileOrAdmin,
+    HasWorkspace,
+    IsUserInWorkspace
 )
+from rest_framework import serializers  # for ValidationError
+
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.views import APIView
 # Teacher and Student viewsets: use DjangoModelPermissions so admin/perm-coded users can manage them.
 # In many designs Teacher/Student creation happens via registration (accounts app) so you may only
 # need list/retrieve for normal users. Keeping DjangoModelPermissions allows fine-grained control.
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
+    permission_classes = [HasWorkspace,IsUserInWorkspace, IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Teacher.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return Teacher.objects.all()
@@ -50,9 +60,14 @@ class TeacherViewSet(viewsets.ModelViewSet):
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
+    permission_classes = [IsAuthenticated,HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Student.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return Student.objects.all()
@@ -70,6 +85,19 @@ class StudentViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ListUsersViews(APIView):
+    permission_classes = [HasWorkspace]
+
+    def get(self, request):
+        workspace = request.workspace
+        teachers = Teacher.objects.filter(workspace=workspace).select_related('user')
+        students = Student.objects.filter(workspace=workspace).select_related('user')
+        guests = Guest.objects.filter(workspace=workspace).select_related('user')
+        return Response({
+            "teachers": UserSummarySerializer([t.user for t in teachers if t.user], many=True).data,
+            "students": UserSummarySerializer([s.user for s in students if s.user], many=True).data,
+            "guests": UserSummarySerializer([g.user for g in guests if g.user], many=True).data,
+        })
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -78,9 +106,14 @@ class CourseViewSet(viewsets.ModelViewSet):
     # IsAuthenticated ensures the user is logged in.
     # DjangoModelPermissions checks model-level add/view/change/delete perms.
     # IsCourseOwnerOrReadOnly enforces that only the instructor (teacher) can modify their own course.
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated,HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Course.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return Course.objects.all()
@@ -98,25 +131,50 @@ class CourseViewSet(viewsets.ModelViewSet):
         return 'instructor' in (self.request.data or {})
     
     def perform_create(self, serializer):
+        ws = getattr(self.request, "workspace", None)
+        if not ws:
+        # If you added HasWorkspace permission, this branch should never hit
+            raise PermissionDenied("Missing or invalid API key (workspace not set).")
+
         user = self.request.user
 
         # If a teacher is creating, forbid them from supplying instructor explicitly.
         # (Either ignore it quietly or raise an error — here we raise to be explicit.)
         if hasattr(user, "teacher"):
-            if self._request_includes_instructor():
-                raise PermissionDenied("You may not set the instructor manually. The instructor will be set to your account.")
-            serializer.save(instructor=user.teacher)
-            return
+                # 👇 New: ensure this teacher actually belongs to this workspace
+                # (only works if Teacher has a workspace FK; if you haven't added it yet, you can drop this check)
+                if getattr(user.teacher, "workspace_id", None) and user.teacher.workspace != ws.id:
+                    raise PermissionDenied("Your teacher profile does not belong to this workspace.")
 
-        # Admins: allow supplying an instructor explicitly (or leave None)
+                # Your existing guard: teachers may not set instructor explicitly
+                if self._request_includes_instructor():
+                    raise PermissionDenied("You may not set the instructor manually. The instructor will be set to your account.")
+
+                # 👇 New: force the course into THIS workspace
+                serializer.save(instructor=user.teacher, workspace=ws)
+                return
+
+            # --- Your existing admin branch, kept intact ---
         if user.is_superuser:
             instructor = serializer.validated_data.get("instructor", None)
-            serializer.save(instructor=instructor)
+
+            # 👇 New: if admin supplies an instructor, it must belong to this workspace
+            if instructor and getattr(instructor, "workspace_id", None) and instructor.workspace_id != ws.id:
+                raise PermissionDenied("Instructor is not in this workspace.")
+
+            # 👇 Optional but recommended: if students are passed at create time, ensure they’re in this workspace
+            students = serializer.validated_data.get("students", [])
+            for s in students:
+                if getattr(s, "workspace_id", None) and s.workspace_id != ws.id:
+                    raise serializers.ValidationError("All students must belong to this workspace.")
+
+            # 👇 New: force workspace on save (admin can set or omit instructor)
+            serializer.save(instructor=instructor, workspace=ws)
             return
 
-        # Others are not allowed to create courses
+        # --- Your existing default branch ---
         raise PermissionDenied("Only teachers or admins can create courses.")
-
+    
     def update(self, request, *args, **kwargs):
         """
         Handles both PUT and PATCH (DRF calls update for both).
@@ -137,9 +195,14 @@ class CourseViewSet(viewsets.ModelViewSet):
 class CourseMaterialViewSet(viewsets.ModelViewSet):
     queryset = CourseMaterial.objects.all()
     serializer_class = CourseMaterialSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return CourseMaterial.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return CourseMaterial.objects.all()
@@ -150,6 +213,14 @@ class CourseMaterialViewSet(viewsets.ModelViewSet):
         return CourseMaterial.objects.none()
 
     def perform_create(self, serializer):
+        ws = getattr(self.request, "workspace", None)
+        if not ws:
+            raise PermissionDenied("Missing or invalid API key.")
+        # enforce instructor same workspace (if you allow passing instructor)
+        instructor = serializer.validated_data.get("instructor")
+        if instructor and instructor.workspace_id != ws.id:
+            raise serializers.ValidationError("Instructor is not in this workspace.")
+        serializer.save(workspace=ws)  # 👈 force tenant    
         # ensure teacher creating material is set as owning course's instructor (optional)
         teacher = getattr(self.request.user, "teacher", None)
         if teacher:
@@ -167,9 +238,14 @@ class CourseMaterialViewSet(viewsets.ModelViewSet):
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace,  DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Assignment.objects.filter(workspace=workspace)
+        
         user = self.request.user
         if user.is_superuser:
             return Assignment.objects.all()
@@ -180,6 +256,11 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         return Assignment.objects.none()
 
     def perform_create(self, serializer):
+        ws = getattr(self.request, "workspace", None)
+        course = serializer.validated_data.get("course")
+        if course.workspace_id != ws.id:
+            raise serializers.ValidationError("Course does not belong to this workspace.")
+        serializer.save(workspace=ws)
         teacher = getattr(self.request.user, "teacher", None)
         if teacher:
             # set/create assignment for a course if teacher owns it
@@ -195,8 +276,9 @@ class AssignmentViewSet(viewsets.ModelViewSet):
 
 class SubmissionViewSet(viewsets.ModelViewSet):
     queryset = Submission.objects.select_related("assignment__course", "student__user").all()
+
     # Use object-level permission plus model perms
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnSubmissionOrCourseTeacher]
+    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnSubmissionOrCourseTeacher]
 
     def get_serializer_class(self):
         user = self.request.user
@@ -207,6 +289,12 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         return SubmissionStudentSerializer
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Submission.objects.filter(workspace=workspace)
+
+
         user = self.request.user
         if user.is_superuser:
             return self.queryset
@@ -219,6 +307,14 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         return Submission.objects.none()
 
     def perform_create(self, serializer):
+        ws = getattr(self.request, "workspace", None)
+        assignment = serializer.validated_data["assignment"]
+        if assignment.workspace_id != ws.id:
+            raise serializers.ValidationError("Assignment not in this workspace.")
+        user = self.request.user
+        if not hasattr(user, "student") or user.student.workspace_id != ws.id:
+            raise PermissionDenied("Only students in this workspace can submit.")
+        serializer.save(workspace=ws, student=user.student)
         # When a student creates a submission, attach their Student profile as owner.
         user = self.request.user
         if hasattr(user, "student"):
@@ -262,10 +358,16 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
+
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Lesson.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return Lesson.objects.all()
@@ -291,9 +393,14 @@ class LessonViewSet(viewsets.ModelViewSet):
 class ProgressViewSet(viewsets.ModelViewSet):
     queryset = Progress.objects.select_related("lesson__course", "student").all()
     serializer_class = ProgressSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsOwnProgressOrCourseTeacher]
+    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnProgressOrCourseTeacher]
 
     def get_queryset(self):
+        # Priority 1: API key workspace
+        workspace = getattr(self.request, "workspace", None)
+        if workspace:
+            return Progress.objects.filter(workspace=workspace)
+
         user = self.request.user
         if user.is_superuser:
             return self.queryset

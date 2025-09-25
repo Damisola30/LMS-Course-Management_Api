@@ -36,7 +36,11 @@ class StudentSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):   
     instructor = serializers.PrimaryKeyRelatedField(read_only=True)  # client cannot set
     students = serializers.PrimaryKeyRelatedField(many=True, required=False, queryset=Student.objects.all())
- 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        ws = getattr(self.context.get("request"), "workspace", None)
+        if ws:
+            self.fields["students"].queryset = Student.objects.filter(workspace=ws)
     class Meta:
         model = Course
         fields = [

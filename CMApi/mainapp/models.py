@@ -5,6 +5,7 @@ from accounts.models import User
 
 
 class Teacher(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, related_name="teachers", null = True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     specialization = models.CharField(max_length=100)
@@ -18,6 +19,7 @@ class Teacher(models.Model):
 
 # Student model representing a student(User-Group) in the LMS
 class Student(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, related_name="students",null = True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     age = models.IntegerField()
     enrolled_date = models.DateField(auto_now_add=True)
@@ -28,9 +30,20 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
+class Guest (models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, related_name="guests",null = True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+    
+    
 # Course model representing a course in the LMS
 class Course(models.Model):
-    title = models.CharField(max_length=100, unique=True)
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, related_name="courses",null = True, blank=True)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     instructor = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
     students = models.ManyToManyField(Student, related_name='courses', blank=True)
@@ -50,9 +63,14 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
-    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["workspace","title"], name="uniq_course_title_per_workspace"),
+        ]
+        
 # CourseMaterial model representing materials for courses
 class CourseMaterial(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, null=True, blank=True, related_name="CourseMaterials")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name = "materials")
     title = models.CharField(max_length=100)
     file = models.FileField(upload_to="course_materials/")
@@ -66,6 +84,7 @@ class CourseMaterial(models.Model):
     
 # Assignment model representing assignments for courses
 class Assignment(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, null=True, blank=True, related_name="Assignments")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="assignments")
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -82,6 +101,7 @@ class Assignment(models.Model):
 
 # Submission model representing student submissions for assignments
 class Submission(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, null=True, blank=True, related_name="Submissions")
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name="submissions")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     file = models.FileField(upload_to="submissions/")
@@ -96,6 +116,7 @@ class Submission(models.Model):
 
 # Lesson model representing individual lessons within a course
 class Lesson(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, null=True, blank=True, related_name="Lessons")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="lessons")
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -110,6 +131,7 @@ class Lesson(models.Model):
 
 # Progress model to track lesson completion by students
 class Progress(models.Model):
+    workspace = models.ForeignKey("accounts.Workspace", on_delete=models.CASCADE, null=True, blank=True, related_name="Progress")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE) 
     completed = models.BooleanField(default=False)

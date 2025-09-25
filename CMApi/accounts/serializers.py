@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from mainapp.models import Teacher, Student   
+from mainapp.models import Teacher, Student, Guest   
+from django.db import transaction, IntegrityError
 
 User = get_user_model()
 
@@ -14,24 +15,47 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ("username","email","password","first_name","last_name","role")
 
     def create(self, validated_data):
+        request = self.context["request"]
+
+        # ✅ get the Workspace (not the ApiKey)
+        ws = getattr(request, "workspace", None)
+        if ws is None:
+            raise serializers.ValidationError("API key header required.")
+
         role = validated_data.pop("role")
-        password = validated_data.pop("password")
-        user = User(**validated_data)
-        user.set_password(password)
-        user.role = role
-        user.save()
+        raw_password = validated_data.pop("password")
 
-        # assign group
-        group_name = role.capitalize()
         try:
-            grp = Group.objects.get(name=group_name)
-            grp.user_set.add(user)
-        except Group.DoesNotExist:
-            pass
+            with transaction.atomic():
+                # create user
+                user = User(**validated_data)
+                user.set_password(raw_password)
+                user.role = role
+                user.save()
 
-        # create profile if needed
-        if role == "teacher":
-            Teacher.objects.create(user=user, specialization="", experience=0)
-        elif role == "student":
-            Student.objects.create(user=user, age=0)
-        return user
+                # assign group (best-effort)
+                group_name = role.capitalize()
+                try:
+                    Group.objects.get(name=group_name).user_set.add(user)
+                except Group.DoesNotExist:
+                    pass
+
+                # create tenant-bound profile
+                if role == "teacher":
+                    Teacher.objects.create(
+                        user=user, workspace=ws, specialization="", experience=0
+                    )
+                elif role == "student":
+                    Student.objects.create(
+                        user=user, workspace=ws, age=0
+                    )
+                elif role == "guest":
+                    Guest.objects.create(
+                        user=user, workspace=ws
+                    )
+
+                return user
+
+        except IntegrityError as e:
+            # bubble up a clean API error
+            raise serializers.ValidationError({"detail": "Could not register user", "error": str(e)})
