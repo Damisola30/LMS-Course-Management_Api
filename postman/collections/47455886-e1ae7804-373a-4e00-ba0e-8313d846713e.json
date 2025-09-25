@@ -10,6 +10,213 @@
 			"name": "Account",
 			"item": [
 				{
+					"name": "Create Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73020d75-6bcd-4868-81fd-c017a325c3e7",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"testworksapce2\",\r\n    \"hours\" :\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/create/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd31caba-e938-495f-a073-8a668ff4a06d",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-04221f0c-e497-49a4-a13a-2dce6ad140a2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testworksapce2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seed Workspace",
+					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"teacher_count\": 2,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dev",
+								"seed",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"listusers",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register User",
 					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
 					"protocolProfileBehavior": {
@@ -31,7 +238,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/register/",
+							"raw": "{{base_url}}/accounts/register/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -39,6 +246,13 @@
 								"accounts",
 								"register",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -120,53 +334,6 @@
 							"body": "{\n    \"username\": \"teacher1\",\n    \"email\": \"t1@example.com\",\n    \"first_name\": \"Alice\",\n    \"last_name\": \"Teacher\",\n    \"role\": \"teacher\"\n}"
 						}
 					]
-				},
-				{
-					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
-								"exec": [
-									"let data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.access);\r",
-									"pm.environment.set(\"refresh_token\", data.refresh)\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/login/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"login",
-								""
-							]
-						}
-					},
-					"response": []
 				},
 				{
 					"name": "Refresh Token",
@@ -284,20 +451,25 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"key": "workspace",
+								"value": "{{api_key}}",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/teachers/",
+							"raw": "{{base_url}}/teachers/?workspace={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
 								""
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -517,6 +689,18 @@
 								""
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-f6a1de62-6ed6-4f80-b47e-53e97cba0f6e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
