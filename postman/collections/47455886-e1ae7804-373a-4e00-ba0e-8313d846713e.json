@@ -389,8 +389,7 @@
 							"query": [
 								{
 									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
+									"value": "{{api_key}}"
 								}
 							]
 						}
