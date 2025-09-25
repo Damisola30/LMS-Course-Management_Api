@@ -170,6 +170,53 @@
 					"response": []
 				},
 				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register User",
 					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
 					"protocolProfileBehavior": {
@@ -287,53 +334,6 @@
 							"body": "{\n    \"username\": \"teacher1\",\n    \"email\": \"t1@example.com\",\n    \"first_name\": \"Alice\",\n    \"last_name\": \"Teacher\",\n    \"role\": \"teacher\"\n}"
 						}
 					]
-				},
-				{
-					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
-								"exec": [
-									"let data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.access);\r",
-									"pm.environment.set(\"refresh_token\", data.refresh)\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/login/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"login",
-								""
-							]
-						}
-					},
-					"response": []
 				},
 				{
 					"name": "Refresh Token",
