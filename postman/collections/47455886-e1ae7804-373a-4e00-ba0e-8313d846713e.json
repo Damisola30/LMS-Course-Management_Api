@@ -397,7 +397,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "List Users",
 					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
