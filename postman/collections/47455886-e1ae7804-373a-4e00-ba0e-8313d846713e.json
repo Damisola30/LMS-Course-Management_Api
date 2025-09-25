@@ -359,7 +359,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Seed Workspace",
 					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
