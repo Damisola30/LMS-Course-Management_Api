@@ -1,6 +1,5 @@
 dj_database_url==3.0.1
 Django==5.1
-djangorestframework==3.16.0
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
 rest_framework_simplejwt==0.0.2
