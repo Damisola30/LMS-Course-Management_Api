@@ -6,3 +6,5 @@ rest_framework_simplejwt==0.0.2
 gunicorn==23.0.0
 whitenoise==6.11.0
 uvicorn==0.37.0
+psycopg==3.2.10 
+psycopg2==2.9.10 
