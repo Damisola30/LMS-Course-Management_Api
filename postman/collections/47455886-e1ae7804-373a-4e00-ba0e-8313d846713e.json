@@ -1,0 +1,2129 @@
+{
+	"info": {
+		"_postman_id": "47455886-e1ae7804-373a-4e00-ba0e-8313d846713e",
+		"name": "LMS CMApi",
+		"description": "**Title:** LMS Course Management API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\n**Main Features:**\n\n- Manage teachers, students, and courses\n    \n- Upload and retrieve files (course )\n    \n\n**Usage:**\n\n1. Set the `{{base_url}}` variable in your Postman environment.\n    \n2. Use the provided folders for organized access to endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73020d75-6bcd-4868-81fd-c017a325c3e7",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"testworksapce2\",\r\n    \"hours\" :\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/create/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd31caba-e938-495f-a073-8a668ff4a06d",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-04221f0c-e497-49a4-a13a-2dce6ad140a2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testworksapce2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seed Workspace",
+					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"teacher_count\": 2,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dev",
+								"seed",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"listusers",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/register/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"register",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "47455886-4af11f8d-be61-4803-a1fa-c86417d8d86b",
+							"name": "Register User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/accounts/register/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts",
+										"register",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 17 Sep 2025 23:27:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "108"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"username\": \"teacher1\",\n    \"email\": \"t1@example.com\",\n    \"first_name\": \"Alice\",\n    \"last_name\": \"Teacher\",\n    \"role\": \"teacher\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b0143a07-5812-4646-8ff4-94afa29e7214",
+								"exec": [
+									"let data = pm.response.json()\r",
+									"pm.environment.set(\"access_token\", data.access)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "47455886-e054c2dc-083e-4410-b674-da3c2c4dfd86",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\" : \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/token/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Role",
+					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"admin",
+								"change-role",
+								"teacher1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c"
+		},
+		{
+			"name": "Teachers",
+			"item": [
+				{
+					"name": "List Teachers",
+					"id": "47455886-c422b8d7-8905-4066-91bd-0f487368ee0a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "workspace",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/teachers/?workspace={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								""
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "47455886-4e8eaeb0-e610-4ceb-b6a6-661e848e5d09",
+							"name": "List teachers Examples",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/teachers/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"teachers",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 13 Aug 2025 18:05:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.2"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "867"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"John Smith\",\n        \"email\": \"john.smith@example.com\",\n        \"bio\": \"Experienced physics teacher with a passion for interactive learning.\",\n        \"specialization\": \"Physics\",\n        \"experience\": 10,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-09T12:46:32.015761Z\",\n        \"updated_at\": \"2025-08-09T12:46:32.015761Z\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Emily Johnson\",\n        \"email\": \"emily.johnson@example.com\",\n        \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\n        \"specialization\": \"Mathematics\",\n        \"experience\": 8,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-13T14:16:50.917570Z\",\n        \"updated_at\": \"2025-08-13T14:16:50.917570Z\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Emily Johnson\",\n        \"email\": \"emily.johnson@example2.com\",\n        \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\n        \"specialization\": \"Further Mathematics\",\n        \"experience\": 8,\n        \"is_active\": true,\n        \"created_at\": \"2025-08-13T16:56:52.229861Z\",\n        \"updated_at\": \"2025-08-13T16:58:02.988981Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Retrieve Teacher",
+					"id": "47455886-0fbcb2a5-1d94-4eeb-8783-8ae800239e54",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update teachers",
+					"id": "47455886-fa79a5ca-a59e-4bce-874c-2fae6e53dd42",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bio\": \"Mathematics educator focusing on real-world problem-solving.\",\r\n    \"specialization\": \"Further Mathematics\",\r\n    \"experience\": 7,\r\n    \"is_active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Teachers User Details",
+					"id": "47455886-6ed99fc5-32f1-44ef-98d2-682a1ba28936",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"T1@example.com\",\r\n    \"first_name\": \"Alice\",\r\n    \"last_name\": \"Hudson\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teachers/1/user_details/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"1",
+								"user_details",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete teachers",
+					"id": "47455886-af272dee-f76b-4bf0-96c2-adb5850ebb99",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teachers/4/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teachers",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-f6a1de62-6ed6-4f80-b47e-53e97cba0f6e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-3f67e213-441d-4aec-80f4-774cd7023464",
+			"description": "Endpoints for managing teacher records.\n\n**Includes:**\n\n- Create new teachers\n    \n- Retrieve teacher details by ID\n    \n- Update teacher information\n    \n- Delete teacher records\n    \n- List all teachers"
+		},
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "List students",
+					"id": "47455886-841bea31-ede5-4760-bab2-12216ef3839e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Student data",
+					"id": "47455886-579fdd15-fdd9-451c-9201-05a151e046d0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update student data",
+					"id": "47455886-429c0eb5-6fd8-4e65-b0b2-3c000d1c7fc0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": 23,\r\n    \"is_active\": false\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/2/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student User Details",
+					"id": "47455886-6d5eae65-d96d-45f6-a54a-c3fd010abec6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"Student3@gmail.com\",\r\n    \"first_name\": \"Bumi\",\r\n    \"last_name\": \"Adefowo\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/students/3/user_details/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"3",
+								"user_details",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete student data",
+					"id": "47455886-bd524fe9-1c30-4912-af8f-64f70b4e218f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/students/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-b0fd75f9-fb7c-4c74-85a1-6a838a28d011",
+			"description": "Endpoints for managing student records.\n\n**Includes:**\n\n- Add new students\n    \n- Retrieve student details by ID\n    \n- Update student information\n    \n- Delete student records\n    \n- List all students"
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "List courses",
+					"id": "47455886-b10f501d-27a6-4b7c-82de-227ee9ca71fe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create courses",
+					"id": "47455886-3ba16056-780e-42e4-bc14-83d43a4e7844",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Intro to Drilling 2\",\r\n  \"description\": \"Advanced Drilling Operations\",\r\n  \"start_date\": \"2025-09-01\",\r\n  \"is_active\": true,\r\n  \"end_date\": \"2025-12-01\",\r\n  \"duration\": 70,\r\n  \"summary\": \"essential for reservior engineers\",\r\n  \"category\": \"Advanced Peroleum Engineering\",\r\n  \"level\": \"intermediate\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Courses",
+					"id": "47455886-2d2c5834-e2dd-48d6-8b54-c37e6be7d753",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course Data",
+					"id": "47455886-484cde8d-8c8c-4340-9d5d-0bf4f8ab66b8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\": \"Petroleum Engineering\",\r\n    \"level\" : \"advanced\",\r\n    \"students\" : [1,2,3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"id": "47455886-2ec09caa-31bb-4fce-980a-8888806bf9d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/2/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-24c81bec-c178-4403-b3f1-735f06f4e6eb",
+			"description": "Endpoints for managing course records.\n\n**Includes:**\n\n- Create new courses\n    \n- Retrieve course details by ID\n    \n- Update course information\n    \n- Delete courses\n    \n- List all available courses"
+		},
+		{
+			"name": "course-materials",
+			"item": [
+				{
+					"name": "List course-materials",
+					"id": "47455886-ef8cd045-62b6-474b-a3dc-558f37637243",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course-materials/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create course-materials",
+					"id": "47455886-10612243-bf33-455d-bcb5-b7b6cd68b616",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"uuid": "21f74df0-baa2-49df-a25e-ee76e5df772b",
+									"value": null
+								},
+								{
+									"key": "title",
+									"value": "Drilling Basics PDF",
+									"type": "text",
+									"uuid": "ac6fd569-f669-4e4f-9df2-5e70b9e6f4dd"
+								},
+								{
+									"key": "course",
+									"value": "1",
+									"type": "text",
+									"uuid": "2c09b884-e933-4093-a8e0-c1ae052f57ef"
+								},
+								{
+									"key": "description",
+									"value": "Lecture slides and notes for Week 1.",
+									"type": "text",
+									"uuid": "5b0c2e8e-8a7c-4700-a837-cef523509d3d"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/course-materials/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course-Material",
+					"id": "47455886-39cad9f8-0487-4943-a92b-37e7e3a3b126",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Drilling Basics PDF-2 \"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/course-materials/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Course-Material",
+					"id": "47455886-47060e8b-d577-4498-a58a-6d1a4ae50795",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course-materials/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course-Material",
+					"id": "47455886-df6025af-189f-40d9-a913-349c9b406ac6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course-materials/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course-materials",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d"
+		},
+		{
+			"name": "lessons",
+			"item": [
+				{
+					"name": "List Lessons",
+					"id": "47455886-c0920b59-4182-4fd0-9b69-91064de4b51b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Lesson",
+					"id": "47455886-5016f906-c4ed-4d4c-9da2-2e6174998026",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Lesson 1: Introduction to Drilling\",\r\n  \"content\": \"This lesson explains the drilling rig structure and safety.\",\r\n  \"order\" : \"2\",\r\n  \"course\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Lesson",
+					"id": "47455886-1a65db09-82f2-46ef-8519-26edd7cc6db0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Lesson",
+					"id": "47455886-ecf6384e-9d5e-4bf3-94a8-0733ae594c7c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"Updated: Added safety regulations and modern rig examples.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Lesson",
+					"id": "47455886-8e065f2b-5830-4c77-b2c7-f2366eef4145",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
+		},
+		{
+			"name": "assignments",
+			"item": [
+				{
+					"name": "List Assingments",
+					"id": "47455886-fc211578-9472-4e50-9f01-d4a05d3b8d75",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Assignment",
+					"id": "47455886-84c32331-a5d2-449c-8acc-6beca54515f9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Assignment 1: Rig Components\",\r\n  \"description\": \"Identify and explain the main rig components.\",\r\n  \"course\": 1,\r\n  \"due_date\": \"2025-10-01T23:59:00Z\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Assignment",
+					"id": "47455886-ce4e3a79-920c-4a1d-b3e6-6c31c328f7c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Assignment",
+					"id": "47455886-0ea70318-6b08-4c54-9ee1-06a2add7af99",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"due_date\": \"2025-10-05T23:59:00Z\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assignment",
+					"id": "47455886-17c6a822-5fc6-4aae-915f-ea268364fd0e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/assignments/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"assignments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36"
+		},
+		{
+			"name": "submissions",
+			"item": [
+				{
+					"name": "List Submissions",
+					"id": "47455886-f110e4b7-d7f8-46c0-a4ba-b9c49017fcd9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/submissions/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Submission",
+					"id": "47455886-12840f99-77e6-450f-be80-648f56ef41e6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"assignment\": 1,\r\n  \"file\": \"submissions/rig_assignment1.pdf\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/submissions/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Submission",
+					"id": "47455886-e0c6d9fb-fea9-4b16-a995-a9ba8e43bfa1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/submissions/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Submission-Student",
+					"id": "47455886-d3590d26-e489-491f-abca-58bbd7a15e17",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"file\": \"submissions/rig_assignment1_v2.pdf\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/submissions/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grade Submission-Teacher",
+					"id": "47455886-043e5750-0ec5-464d-aa33-2960d6c48150",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"grade\": 85.5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/submissions/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Submission",
+					"id": "47455886-6e163658-f9a8-4ee2-9a65-00870e25af37",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/submissions/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submissions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041"
+		},
+		{
+			"name": "progress",
+			"item": [
+				{
+					"name": "List Progress",
+					"id": "47455886-ecafe9ab-21cd-4f5e-ae4c-4255c1a3c4c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/progress/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Progress",
+					"id": "47455886-db3a117e-7e64-4a7f-8dd0-e9569f9ffa22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"student\": 2,\r\n  \"lesson\": 1,\r\n  \"completed\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/progress/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Progress",
+					"id": "47455886-a25f9325-3b57-4887-8789-2ca774a68349",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/progress/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Progress",
+					"id": "47455886-ac09080f-85e9-4e90-b459-d65d0857f267",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"completed\": false\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/progress/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-3864a902-8f27-45e0-a9cb-7cc6dc149750",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/progress/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
+		}
+	]
+}
