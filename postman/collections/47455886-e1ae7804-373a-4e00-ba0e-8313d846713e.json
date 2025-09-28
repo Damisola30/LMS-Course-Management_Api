@@ -2356,7 +2356,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/progress/1/",
+							"raw": "{{base_url}}/progress/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2364,6 +2364,13 @@
 								"progress",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
