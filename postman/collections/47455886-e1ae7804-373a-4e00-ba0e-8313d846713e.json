@@ -426,7 +426,8 @@
 					"response": []
 				}
 			],
-			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c"
+			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c",
+			"description": "Manage workspaces, keys, and authentication.\n\n**Endpoints included**\n\n- **Create Api_Key** – Create/rotate the _single_ API key for a workspace.  \n      \n    Body:\n    \n    - `{ \"username\": \"my_workspace\", \"hours\": 24, \"force_rotate\": true }`\n        \n    - \\--Returns `api_key` (only at creation/rotation) + `expires_at`.\n        \n- **Get Api_Key** – Fetch key metadata (won’t re-show the plaintext key).\n    \n- **Seed Workspace** – Dev-only: seed demo data into the **caller’s workspace**.\n    \n- **List Users** – Optional helper to inspect users in a tenant.\n    \n- **Login** – Tenant-aware login (needs `X-API-Key` + username/password).  \n      \n    Response contains `access`, `refresh`, and workspace info.\n    \n- { \"username\":\"alice_teacher\",\"email\":\"alice@example.com\",\"password\":\"pass123\",\"first_name\":\"Alice\",\"last_name\":\"T\",\"role\":\"teacher\" }\n    \n- **Refresh Token** – Exchange `refresh` for a new `access`.\n    \n- **Change User Role** – Admin-only: switch roles and groups.\n    \n\n**Required headers**\n\n- Most Account routes: `X-API-Key`.\n    \n- Auth routes: also `Authorization: Bearer {{jwt}}` when already logged in.\n    \n- Login itself requires only `X-API-Key` + credentials.\n    \n\n**Notes**\n\n- One key per workspace; rotation is rate-limited.\n    \n- Registration is atomic—no partial users on errors.\n    \n\nEndFragment"
 		},
 		{
 			"name": "Teachers",
