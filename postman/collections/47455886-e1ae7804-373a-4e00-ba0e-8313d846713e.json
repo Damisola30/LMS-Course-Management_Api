@@ -181,13 +181,20 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"guest\",\r\n  \"role\": \"guest\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -207,8 +214,7 @@
 							"query": [
 								{
 									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
+									"value": "{{api_key}}"
 								}
 							]
 						}
