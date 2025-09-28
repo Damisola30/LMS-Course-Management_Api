@@ -1854,7 +1854,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/1/",
+							"raw": "{{base_url}}/assignments/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1862,6 +1862,12 @@
 								"assignments",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
