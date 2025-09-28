@@ -906,7 +906,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/students/3/user_details/",
+							"raw": "{{base_url}}/students/3/user_details/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -915,6 +915,13 @@
 								"3",
 								"user_details",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
