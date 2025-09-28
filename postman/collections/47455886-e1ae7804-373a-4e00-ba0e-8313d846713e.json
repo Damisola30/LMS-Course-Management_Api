@@ -1049,13 +1049,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/",
+							"raw": "{{base_url}}/courses/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"courses",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1085,7 +1092,7 @@
 							"raw": "\r\n"
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/1/",
+							"raw": "{{base_url}}/courses/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1093,6 +1100,13 @@
 								"courses",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
