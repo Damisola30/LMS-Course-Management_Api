@@ -771,13 +771,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/students/",
+							"raw": "{{base_url}}/students/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"students",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
