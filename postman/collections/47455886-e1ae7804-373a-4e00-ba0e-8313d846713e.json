@@ -1706,7 +1706,8 @@
 					"response": []
 				}
 			],
-			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36"
+			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36",
+			"description": "Create assignments per course; students will submit against them.\n\n**Common operations**\n\n- **GET /assignments/** – list by tenant (teacher sees own courses; students see enrolled courses).\n    \n- **POST /assignments/** – create:\n    \n    - `{ \"course\": 12, \"title\": \"Assignment 1\", \"description\": \"Do things\", \"due_date\": \"2025-10-20T23:59:59Z\"}`\n        \n- **GET /assignments/:id/**, **PATCH**, **DELETE**.\n    \n\n**Rules**\n\n- `course` must be in tenant; teacher typically must own the course."
 		},
 		{
 			"name": "submissions",
