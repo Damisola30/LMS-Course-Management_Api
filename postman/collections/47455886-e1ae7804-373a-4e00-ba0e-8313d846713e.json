@@ -1185,7 +1185,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/2/",
+							"raw": "{{base_url}}/courses/2/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1193,6 +1193,13 @@
 								"courses",
 								"2",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
