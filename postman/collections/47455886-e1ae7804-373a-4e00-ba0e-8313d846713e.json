@@ -1992,13 +1992,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/submissions/",
+							"raw": "{{base_url}}/submissions/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"submissions",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
