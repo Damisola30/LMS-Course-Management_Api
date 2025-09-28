@@ -589,13 +589,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/1",
+							"raw": "{{base_url}}/teachers/8?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"1"
+								"8"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
