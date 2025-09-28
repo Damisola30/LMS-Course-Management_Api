@@ -1506,7 +1506,8 @@
 					"response": []
 				}
 			],
-			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
+			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727",
+			"description": "Manage lessons within a course.\n\n**Common operations**\n\n- **GET /lessons/** – list lessons for tenant.\n    \n- { \"course\": 12, \"title\": \"Lesson 1\", \"content\": \"Intro...\", \"order\": 1 }\n    \n- **GET /lessons/:id/** – details.\n    \n- **PATCH /lessons/:id/** – update.\n    \n- **DELETE /lessons/:id/** – remove.\n    \n\n**Rules**\n\n- `course` must belong to the same workspace."
 		},
 		{
 			"name": "assignments",
