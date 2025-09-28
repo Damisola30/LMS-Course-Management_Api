@@ -83,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
