@@ -1001,13 +1001,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/",
+							"raw": "{{base_url}}/courses/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"courses",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
