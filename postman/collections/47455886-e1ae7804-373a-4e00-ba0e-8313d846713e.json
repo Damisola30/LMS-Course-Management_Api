@@ -1714,13 +1714,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/",
+							"raw": "{{base_url}}/assignments/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"assignments",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
