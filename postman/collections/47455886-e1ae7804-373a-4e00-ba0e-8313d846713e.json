@@ -364,7 +364,8 @@
 									"pm.environment.set(\"access_token\", data.access)"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -385,7 +386,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/token/refresh/",
+							"raw": "{{base_url}}/token/refresh/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -393,6 +394,13 @@
 								"token",
 								"refresh",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
