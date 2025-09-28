@@ -1388,7 +1388,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/course-materials/1/",
+							"raw": "{{base_url}}/course-materials/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1396,6 +1396,13 @@
 								"course-materials",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
