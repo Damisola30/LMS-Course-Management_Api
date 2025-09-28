@@ -35,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"\",\r\n    \"hours\" :\"72\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"demo_Workspace\",\r\n    \"hours\" :\"72\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
