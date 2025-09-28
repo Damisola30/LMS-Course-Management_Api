@@ -1940,7 +1940,8 @@
 					"response": []
 				}
 			],
-			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041"
+			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041",
+			"description": "Students upload work; teachers/admins can grade.\n\n**Common operations**\n\n- **GET /submissions/** – student sees own; teacher sees for their courses.\n    \n- **POST /submissions/** – **student** creates (multipart):\n    \n    - form-data:\n        \n        - `assignment`: (in tenant)\n            \n        - `file`: _(choose file)_\n            \n- **PATCH /submissions/:id/** – **teacher/admin** can set `grade`.\n    \n    - { \"grade\": 92.5 }\n        \n- **DELETE /submissions/:id/** – remove (policy-dependent).\n    \n\n**Rules**\n\n- Student can only submit **their own** work.\n    \n- Optional enforcement: edits blocked after `due_date`.\n    \n- Files live under `/media/submissions/` in dev."
 		},
 		{
 			"name": "progress",
