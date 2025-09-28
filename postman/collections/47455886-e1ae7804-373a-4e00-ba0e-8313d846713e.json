@@ -1479,13 +1479,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/",
+							"raw": "{{base_url}}/lessons/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"lessons",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
