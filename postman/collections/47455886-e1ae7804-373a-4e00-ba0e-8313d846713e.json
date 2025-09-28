@@ -724,7 +724,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/4/",
+							"raw": "{{base_url}}/teachers/4/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -732,6 +732,13 @@
 								"teachers",
 								"4",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
