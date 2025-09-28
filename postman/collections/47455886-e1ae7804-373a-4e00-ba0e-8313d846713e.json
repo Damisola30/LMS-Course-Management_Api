@@ -312,7 +312,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -325,7 +326,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+							"raw": "{\r\n    \"username\":\"teacher1\",\r\n    \"password\" : \"pass123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -333,13 +334,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/login/",
+							"raw": "{{base_url}}/login/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"login",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
