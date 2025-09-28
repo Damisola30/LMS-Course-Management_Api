@@ -69,7 +69,8 @@
 									"pm.environment.set(\"api_key\", data.api_key);"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -82,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"testworksapce2\"\r\n}",
+							"raw": "{\r\n    \"username\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
