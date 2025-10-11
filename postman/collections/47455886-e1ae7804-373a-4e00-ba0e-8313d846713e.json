@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "47455886-e1ae7804-373a-4e00-ba0e-8313d846713e",
 		"name": "LMS CMApi",
-		"description": "**Title:** LMS Course Management API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\n**Main Features:**\n\n- Manage teachers, students, and courses\n    \n- Upload and retrieve files (course )\n    \n\n**Usage:**\n\n1. Set the `{{base_url}}` variable in your Postman environment.\n    \n2. Use the provided folders for organized access to endpoints.",
+		"description": "**Title:** LMS Course Management API  \n**Description:**\n\nThis API enables interaction with the School Management System. It provides endpoints to manage Teachers, Students, and Courses, allowing creation, retrieval, updating, and deletion of data.\n\nThe API follows RESTful principles, supports JSON request/response formats, and includes file upload support where applicable.\n\n**Base URL:** `{{base_url}}`\n\nUse this collection to exercise\n\n**Headers you’ll usually need**\n\n```\napi_key: {{workspace_api_key}}        # tenant/workspace\nAuthorization: Bearer {{jwt}}           # actor (teacher/student/admin)\nContent-Type: application/json\n\n ```\n\n**Typical flow**\n\n1. Create/get an **API key** for a workspace (Account → Create Api_Key).\n    \n2. **Register** users in that workspace (Account → Register User).\n    \n3. **Login** to receive JWT (Account → Login).\n    \n4. Call LMS endpoints (Teachers/Students/Courses/…) with **both headers**.\n    \n\nTip: set an Environment with `{{base_url}}`, `{{workspace_api_key}}`, `{{jwt}}`.\n\n## Common Errors\n\n- **401 Unauthorized** – missing/invalid JWT.\n    \n- **403 Forbidden** – role/ownership violation or cross-tenant attempt.\n    \n- **404 Not Found** – object ID not found in this tenant.\n    \n- **409 Conflict** – unique constraint (e.g., course title in workspace).\n    \n- **##--429 Too Many Requests** – throttling (per IP/user/scope).\n    \n- **400 Bad Request** – validation errors.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -21,7 +21,8 @@
 									"pm.environment.set(\"api_key\", data.api_key);"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -34,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"testworksapce2\",\r\n    \"hours\" :\"2\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"demo_Workspace\",\r\n    \"hours\" :\"72\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -68,7 +69,8 @@
 									"pm.environment.set(\"api_key\", data.api_key);"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -81,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"testworksapce2\"\r\n}",
+							"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,11 +111,14 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"teacher_count\": 2,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -161,56 +166,8 @@
 							"query": [
 								{
 									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
+									"value": "{{api_key}}"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
-								"exec": [
-									"let data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.access);\r",
-									"pm.environment.set(\"refresh_token\", data.refresh)\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\" : \"admin\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/login/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"login",
-								""
 							]
 						}
 					},
@@ -224,13 +181,20 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"Teacher\",\r\n  \"role\": \"teacher\"\r\n}",
+							"raw": "{\r\n  \"username\": \"teacher1\",\r\n  \"email\": \"t1@example.com\",\r\n  \"password\": \"pass123\",\r\n  \"first_name\": \"Alice\",\r\n  \"last_name\": \"guest\",\r\n  \"role\": \"guest\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -250,8 +214,7 @@
 							"query": [
 								{
 									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
+									"value": "{{api_key}}"
 								}
 							]
 						}
@@ -336,6 +299,60 @@
 					]
 				},
 				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1894639a-ff30-404a-a9f0-5f52562721e2",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "47455886-c8db245a-e9b2-4ec5-a1d5-be47c297767e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"teacher1\",\r\n    \"password\" : \"pass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Refresh Token",
 					"event": [
 						{
@@ -347,7 +364,8 @@
 									"pm.environment.set(\"access_token\", data.access)"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -368,7 +386,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/token/refresh/",
+							"raw": "{{base_url}}/token/refresh/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -376,6 +394,13 @@
 								"token",
 								"refresh",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -410,7 +435,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/",
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -420,13 +445,21 @@
 								"change-role",
 								"teacher1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c"
+			"id": "47455886-93864800-c623-4d95-b015-846fb4e0662c",
+			"description": "Manage workspaces, keys, and authentication.\n\n**Endpoints included**\n\n- **Create Api_Key** – Create/rotate the _single_ API key for a workspace.\n    \n    Body:\n    \n    - `{ \"username\": \"my_workspace\", \"hours\": 24, \"force_rotate\": true }`\n        \n    - \\--Returns `api_key` (only at creation/rotation) + `expires_at`.\n        \n- **Get Api_Key** – Fetch key metadata (won’t re-show the plaintext key).\n    \n- **Seed Workspace** – Dev-only: seed demo data into the **caller’s workspace**.\n    \n- **List Users** – Optional helper to inspect users in a tenant.\n    \n- **Login** – Tenant-aware login (needs `X-API-Key` + username/password).\n    \n    - Response contains `access`, `refresh`, and workspace info.\n        \n- **Register User** – Creates a User **in this workspace** + corresponding profile (`teacher|student|guest`).\n    \n    - `{ \"username\":\"alice_teacher\",\"email\":\"`[<code>alice@example.com</code>](https://mailto:alice@example.com)`\",\"password\":\"pass123\",\"first_name\":\"Alice\",\"last_name\":\"T\",\"role\":\"teacher\" }`\n        \n- **Refresh Token** – Exchange `refresh` for a new `access`.\n    \n- **Change User Role** – Admin-only: switch roles and groups.\n    \n\n**Required headers**\n\n- Most Account routes: `api_key`.\n    \n- Auth routes: also `Authorization: Bearer {{jwt}}` when already logged in.\n    \n- Login itself requires only `api_key` + credentials.\n    \n\n**Notes**\n\n- One key per workspace.\n    \n- Registration is atomic—no partial users on errors."
 		},
 		{
 			"name": "Teachers",
@@ -449,15 +482,9 @@
 							]
 						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "workspace",
-								"value": "{{api_key}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/?workspace={{api_key}}",
+							"raw": "{{base_url}}/teachers/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -467,7 +494,7 @@
 							],
 							"query": [
 								{
-									"key": "workspace",
+									"key": "api_key",
 									"value": "{{api_key}}"
 								}
 							]
@@ -562,13 +589,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/1",
+							"raw": "{{base_url}}/teachers/8?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"1"
+								"8"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -603,14 +636,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/teachers/1/",
+							"raw": "{{base_url}}/teachers/8/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"1",
+								"8",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -645,15 +684,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/teachers/1/user_details/",
+							"raw": "{{base_url}}/teachers/8/user_details/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"teachers",
-								"1",
+								"8",
 								"user_details",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -679,7 +724,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/teachers/4/",
+							"raw": "{{base_url}}/teachers/4/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -687,26 +732,21 @@
 								"teachers",
 								"4",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"id": "47455886-f6a1de62-6ed6-4f80-b47e-53e97cba0f6e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
 					},
 					"response": []
 				}
 			],
 			"id": "47455886-3f67e213-441d-4aec-80f4-774cd7023464",
-			"description": "Endpoints for managing teacher records.\n\n**Includes:**\n\n- Create new teachers\n    \n- Retrieve teacher details by ID\n    \n- Update teacher information\n    \n- Delete teacher records\n    \n- List all teachers"
+			"description": "CRUD for teacher profiles within the current workspace.\n\n**Common operations**\n\n- **GET /teachers/** – list teachers for this workspace.\n    \n- **POST /teachers/** – create (usually admin only).\n    \n- **GET /teachers/:id/** – details.\n    \n- **PATCH /teachers/:id/** – update profile fields.\n    \n- **DELETE /teachers/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 10, \"username\": \"ws__teacher1\", \"email\": \"...\" },\n  \"specialization\": \"Math\",\n  \"experience\": 5,\n  \"is_active\": true,\n  \"created_at\": \"...\",\n  \"updated_at\": \"...\"\n}\n\n ```\n\n**Rules**\n\n- All results are **auto-scoped** to `request.workspace`.\n    \n- Use `Authorization: Bearer {{jwt}}` from a teacher/admin account.\n    \n- Object-level permissions may restrict updates to own profile."
 		},
 		{
 			"name": "Students",
@@ -731,13 +771,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/students/",
+							"raw": "{{base_url}}/students/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"students",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -763,13 +809,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/students/2",
+							"raw": "{{base_url}}/students/2?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"students",
 								"2"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -804,7 +857,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/students/2/",
+							"raw": "{{base_url}}/students/2/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -812,6 +865,13 @@
 								"students",
 								"2",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -846,7 +906,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/students/3/user_details/",
+							"raw": "{{base_url}}/students/3/user_details/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -855,6 +915,13 @@
 								"3",
 								"user_details",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -884,13 +951,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/students/2",
+							"raw": "{{base_url}}/students/2?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"students",
 								"2"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -898,7 +972,7 @@
 				}
 			],
 			"id": "47455886-b0fd75f9-fb7c-4c74-85a1-6a838a28d011",
-			"description": "Endpoints for managing student records.\n\n**Includes:**\n\n- Add new students\n    \n- Retrieve student details by ID\n    \n- Update student information\n    \n- Delete student records\n    \n- List all students"
+			"description": "Manage student profiles within the current workspace.\n\n**Common operations**\n\n- **GET /students/** – list.\n    \n- **POST /students/** – create (admin/teacher).\n    \n- **GET /students/:id/** – details.\n    \n- **PATCH /students/:id/** – update info.\n    \n- **DELETE /students/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 21, \"username\": \"ws__student1\", \"email\": \"...\" },\n  \"age\": 22,\n  \"enrolled_date\": \"2025-09-20\",\n  \"is_active\": true\n}\n\n ```\n\n**Rules**\n\n- Always tenant-scoped by `X-API-Key`.\n    \n- Students may only see/update their own profile (depending on perms)."
 		},
 		{
 			"name": "Courses",
@@ -927,13 +1001,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/",
+							"raw": "{{base_url}}/courses/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"courses",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -968,13 +1049,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/",
+							"raw": "{{base_url}}/courses/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"courses",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1004,7 +1092,7 @@
 							"raw": "\r\n"
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/1/",
+							"raw": "{{base_url}}/courses/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1012,6 +1100,13 @@
 								"courses",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1046,7 +1141,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/1/",
+							"raw": "{{base_url}}/courses/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1054,6 +1149,13 @@
 								"courses",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1083,7 +1185,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/courses/2/",
+							"raw": "{{base_url}}/courses/2/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1091,6 +1193,13 @@
 								"courses",
 								"2",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1098,7 +1207,7 @@
 				}
 			],
 			"id": "47455886-24c81bec-c178-4403-b3f1-735f06f4e6eb",
-			"description": "Endpoints for managing course records.\n\n**Includes:**\n\n- Create new courses\n    \n- Retrieve course details by ID\n    \n- Update course information\n    \n- Delete courses\n    \n- List all available courses"
+			"description": "Create and manage courses; enroll students; set instructors.\n\n**Common operations**\n\n- **GET /courses/** – list courses (teacher sees own; student sees enrolled).\n    \n- **POST /courses/** – create course.\n    \n- **GET /courses/:id/** – details.\n    \n- **PATCH /courses/:id/** – update.\n    \n- **DELETE /courses/:id/** – remove.\n    \n\n**Create payload (teacher)**\n\n``` json\n{\n  \"title\": \"Intro to Python\",\n  \"description\": \"Basics\",\n  \"start_date\": \"2025-10-01\",\n  \"end_date\": \"2025-12-01\",\n  \"duration\": 60,\n  \"category\": \"Programming\",\n  \"level\": \"beginner\",\n  \"students\": [/* optional student IDs in same workspace */]\n}\n\n ```\n\n**Rules**\n\n- **Teachers cannot set** **`instructor`** in the payload; it’s auto-set to the caller’s teacher profile.\n    \n- **Admins** may set `instructor`, but it **must** be in the same workspace.\n    \n- All related objects (students/instructor) are validated to belong to the tenant."
 		},
 		{
 			"name": "course-materials",
@@ -1123,13 +1232,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/course-materials/",
+							"raw": "{{base_url}}/course-materials/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"course-materials",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1184,13 +1300,20 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/course-materials/",
+							"raw": "{{base_url}}/course-materials/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"course-materials",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1225,7 +1348,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/course-materials/1/",
+							"raw": "{{base_url}}/course-materials/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1233,6 +1356,13 @@
 								"course-materials",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1258,7 +1388,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/course-materials/1/",
+							"raw": "{{base_url}}/course-materials/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1266,6 +1396,13 @@
 								"course-materials",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1291,7 +1428,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/course-materials/1/",
+							"raw": "{{base_url}}/course-materials/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1299,13 +1436,21 @@
 								"course-materials",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d"
+			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d",
+			"description": "Upload/download course files (per workspace).\n\n**Common operations**\n\n- **GET /course-materials/** – list materials.\n    \n- **POST /course-materials/** – create (multipart).\n    \n- **GET /course-materials/:id/** – details (and file URL).\n    \n- **DELETE /course-materials/:id/** – remove.\n    \n\n**Create (multipart)**\n\n- Headers: `Content-Type: multipart/form-data`\n    \n- Body (form-data):\n    \n    - `course`: (must be in tenant)\n        \n    - `title`: `Syllabus`\n        \n    - `file`: _(choose file)_\n        \n\n**Notes**\n\n- Files are stored under `/media/...` in dev; use object storage in prod."
 		},
 		{
 			"name": "lessons",
@@ -1334,13 +1479,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/",
+							"raw": "{{base_url}}/lessons/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"lessons",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1375,13 +1527,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/",
+							"raw": "{{base_url}}/lessons/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"lessons",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1411,7 +1570,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/1/",
+							"raw": "{{base_url}}/lessons/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1419,6 +1578,13 @@
 								"lessons",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1453,7 +1619,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/1/",
+							"raw": "{{base_url}}/lessons/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1461,6 +1627,13 @@
 								"lessons",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1490,7 +1663,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/lessons/1/",
+							"raw": "{{base_url}}/lessons/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1498,13 +1671,21 @@
 								"lessons",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727"
+			"id": "47455886-580587a8-6079-4a4b-a0f5-5380db001727",
+			"description": "Manage lessons within a course.\n\n**Common operations**\n\n- **GET /lessons/** – list lessons for tenant.\n    \n- { \"course\": 12, \"title\": \"Lesson 1\", \"content\": \"Intro...\", \"order\": 1 }\n    \n- **GET /lessons/:id/** – details.\n    \n- **PATCH /lessons/:id/** – update.\n    \n- **DELETE /lessons/:id/** – remove.\n    \n\n**Rules**\n\n- `course` must belong to the same workspace."
 		},
 		{
 			"name": "assignments",
@@ -1533,13 +1714,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/",
+							"raw": "{{base_url}}/assignments/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"assignments",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1574,13 +1762,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/",
+							"raw": "{{base_url}}/assignments/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"assignments",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1610,7 +1805,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/1/",
+							"raw": "{{base_url}}/assignments/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1618,6 +1813,13 @@
 								"assignments",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1652,7 +1854,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/1/",
+							"raw": "{{base_url}}/assignments/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1660,6 +1862,12 @@
 								"assignments",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
 							]
 						}
 					},
@@ -1689,7 +1897,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/assignments/1/",
+							"raw": "{{base_url}}/assignments/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1697,13 +1905,21 @@
 								"assignments",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36"
+			"id": "47455886-1f7ca764-f64a-4e14-b7fb-615127f65a36",
+			"description": "Create assignments per course; students will submit against them.\n\n**Common operations**\n\n- **GET /assignments/** – list by tenant (teacher sees own courses; students see enrolled courses).\n    \n- **POST /assignments/** – create:\n    \n    - `{ \"course\": 12, \"title\": \"Assignment 1\", \"description\": \"Do things\", \"due_date\": \"2025-10-20T23:59:59Z\"}`\n        \n- **GET /assignments/:id/**, **PATCH**, **DELETE**.\n    \n\n**Rules**\n\n- `course` must be in tenant; teacher typically must own the course."
 		},
 		{
 			"name": "submissions",
@@ -1728,13 +1944,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/submissions/",
+							"raw": "{{base_url}}/submissions/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"submissions",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1769,13 +1992,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/submissions/",
+							"raw": "{{base_url}}/submissions/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"submissions",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1805,7 +2035,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/submissions/1/",
+							"raw": "{{base_url}}/submissions/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1813,6 +2043,13 @@
 								"submissions",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1847,7 +2084,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/submissions/1/",
+							"raw": "{{base_url}}/submissions/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1855,6 +2092,13 @@
 								"submissions",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1889,7 +2133,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/submissions/1/",
+							"raw": "{{base_url}}/submissions/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1897,6 +2141,13 @@
 								"submissions",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -1922,7 +2173,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/submissions/1/",
+							"raw": "{{base_url}}/submissions/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1930,13 +2181,21 @@
 								"submissions",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041"
+			"id": "47455886-20c28358-4b6b-4c01-be40-2f0c8c510041",
+			"description": "Students upload work; teachers/admins can grade.\n\n**Common operations**\n\n- **GET /submissions/** – student sees own; teacher sees for their courses.\n    \n- **POST /submissions/** – **student** creates (multipart):\n    \n    - form-data:\n        \n        - `assignment`: (in tenant)\n            \n        - `file`: _(choose file)_\n            \n- **PATCH /submissions/:id/** – **teacher/admin** can set `grade`.\n    \n    - { \"grade\": 92.5 }\n        \n- **DELETE /submissions/:id/** – remove (policy-dependent).\n    \n\n**Rules**\n\n- Student can only submit **their own** work.\n    \n- Optional enforcement: edits blocked after `due_date`.\n    \n- Files live under `/media/submissions/` in dev."
 		},
 		{
 			"name": "progress",
@@ -1961,13 +2220,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/progress/",
+							"raw": "{{base_url}}/progress/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"progress",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -2002,13 +2268,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/progress/",
+							"raw": "{{base_url}}/progress/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"progress",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -2034,7 +2307,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/progress/1/",
+							"raw": "{{base_url}}/progress/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2042,6 +2315,13 @@
 								"progress",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -2076,7 +2356,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/progress/1/",
+							"raw": "{{base_url}}/progress/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2084,6 +2364,13 @@
 								"progress",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
@@ -2109,7 +2396,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/progress/1/",
+							"raw": "{{base_url}}/progress/1/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2117,13 +2404,21 @@
 								"progress",
 								"1",
 								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4"
+			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4",
+			"description": "Track which lessons each student has completed.\n\n**Common operations**\n\n- **GET /progress/** – list progress rows for tenant (student sees own; teacher sees for their courses).\n    \n- **POST /progress/** – create/toggle:\n    \n    - `{ \"student\": 31, \"lesson\": 44, \"completed\": true }`\n        \n- **PATCH /progress/:id/** – update completion status.\n    \n\n**Rules**\n\n- Unique per `(student, lesson)`; all entities must belong to tenant."
 		}
 	]
 }

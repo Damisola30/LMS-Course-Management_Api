@@ -395,7 +395,11 @@ Add these to sensitive endpoints:
 
 Add your collection link here once published:
 
+<<<<<<< HEAD
 * **Postman docs:** *<paste your public documentation link>*
+=======
+* **Postman docs:** (https://damisola-d-ajiga-5454729.postman.co/workspace/LMS-Course-management-API~17d561c0-9761-49b6-85d9-6eefacd44352/collection/47455886-e1ae7804-373a-4e00-ba0e-8313d846713e?action=share&creator=47455886&active-environment=47455886-07b5df6a-98f5-46f0-9ffb-36478822b93b)
+>>>>>>> ed335ecff403821da0051da84d7d6f0cb3937ab2
 
 Tips:
 
@@ -416,15 +420,24 @@ Tips:
 ---
 
 ## 10) License
+<<<<<<< HEAD
 
 **MIT License** — see `LICENSE` file.
+=======
+....
+>>>>>>> ed335ecff403821da0051da84d7d6f0cb3937ab2
 
 ---
 
 ## 11) Contact
 
+<<<<<<< HEAD
 * Author/Maintainer: **Your Name**
 * Email: **[you@example.com](mailto:you@example.com)**
+=======
+* Author/Maintainer: **Damisola Deboh-Ajiga**
+* Email: **damisola.d.ajiga@gmail.com**
+>>>>>>> ed335ecff403821da0051da84d7d6f0cb3937ab2
 * Issues: use the repo **Issues** tab for bug reports & feature requests.
 
 ---
