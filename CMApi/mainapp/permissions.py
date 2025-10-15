@@ -72,47 +72,47 @@ class IsOwnProfileOrAdmin(BasePermission):
         return owner is not None and owner == request.user
 
 
-class HasWorkspace(BasePermission):
+from rest_framework.permissions import BasePermission
+
+class HasDeveloper(BasePermission):
     message = "Valid API key required (missing/expired)."
 
     def has_permission(self, request, view):
-        # Allow superusers to bypass if you want:
-        #if request.user and request.user.is_superuser:
-            #return True
-        print("Workspace in request:", hasattr(request, "workspace"))#debug
-        return hasattr(request, "workspace")
+        # Check if middleware has attached the developer
+        print("Developer in request:", hasattr(request, "developer"))  # debug
+        return hasattr(request, "developer")
 
 
-class IsUserInWorkspace(BasePermission):
-    message = "Your account does not belong to this workspace."
+class IsUserUnderDeveloper(BasePermission):
+    message = "Your account does not belong to this developer."
 
     def has_permission(self, request, view):
-        if not (request.user and request.user.is_authenticated):
+        user = getattr(request, "user", None)
+        if not (user and user.is_authenticated):
             print("User not authenticated")
             return False
-        ws = getattr(request, "workspace", None)
-        if not ws:
-            print("No workspace in request")
+
+        dev = getattr(request, "developer", None)
+        if not dev:
+            print("No developer in request (API key missing or invalid)")
             return False
-        if request.user.is_superuser:
-            print("User is superuser, bypassing workspace check")
+
+        # Allow superuser to bypass if needed
+        if user.is_superuser:
+            print("Superuser detected, bypassing developer check")
             return True
-        # derive user's workspace
-        user_ws_id = None
 
-        if hasattr(request.user, "teacher"):
-            teacher = getattr(request.user, "teacher", None)
-            if teacher:
-                user_ws_id = teacher.workspace_id
+        user_dev_id = None
 
-        if user_ws_id is None and hasattr(request.user, "student"):
-            student = getattr(request.user, "student", None)
-            if student:
-                user_ws_id = student.workspace_id
+        # Check the developer associated with this user (actor)
+        if hasattr(user, "teacher"):
+            user_dev_id = user.teacher.developer_id
 
-        if user_ws_id is None and hasattr(request.user, "guest"):
-            guest = getattr(request.user, "guest", None)
-            if guest:
-                user_ws_id = guest.workspace_id
+        elif hasattr(user, "student"):
+            user_dev_id = user.student.developer_id
 
-        return user_ws_id == ws.id
+        elif hasattr(user, "guest"):
+            user_dev_id = user.guest.developer_id
+
+        # Finally, compare the developer IDs
+        return user_dev_id == dev.id
