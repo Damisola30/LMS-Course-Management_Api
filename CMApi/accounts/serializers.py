@@ -16,10 +16,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context["request"]
+        developer = getattr(request, "developer", None)
 
-        # ✅ get the Workspace (not the ApiKey)
-        ws = getattr(request, "workspace", None)
-        if ws is None:
+        if developer is None:
             raise serializers.ValidationError("API key header required.")
 
         role = validated_data.pop("role")
@@ -43,15 +42,15 @@ class RegisterSerializer(serializers.ModelSerializer):
                 # create tenant-bound profile
                 if role == "teacher":
                     Teacher.objects.create(
-                        user=user, workspace=ws, specialization="", experience=0
+                        user=user, developer=developer, specialization="", experience=0
                     )
                 elif role == "student":
                     Student.objects.create(
-                        user=user, workspace=ws, age=0
+                        user=user, developer=developer,  age=0
                     )
                 elif role == "guest":
                     Guest.objects.create(
-                        user=user, workspace=ws
+                        user=user, developer=developer, 
                     )
 
                 return user

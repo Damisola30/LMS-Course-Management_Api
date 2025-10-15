@@ -1,12 +1,11 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-import secrets
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
-from datetime import timedelta
-import secrets
-from django.db import models
+from django.db import models, IntegrityError
+
+def default_expires_at():
+    return timezone.now() + timedelta(days=1)
 
 # Create your models here.
 
@@ -26,23 +25,16 @@ class User(AbstractUser):
         return f"{self.username} ({self.role})"
 
 
-class Workspace(models.Model):
-    name = models.CharField(max_length=150, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Workspace(models.Model):
+#     name = models.CharField(max_length=150, unique=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-# models.py
-from datetime import timedelta
-from django.db import models, IntegrityError
-from django.utils import timezone
-
-def default_expires_at():
-    return timezone.now() + timedelta(days=1)
 
 class ApiKey(models.Model):
-    workspace  = models.OneToOneField(Workspace, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.OneToOneField(User, on_delete=models.CASCADE, related_name="api_key")
     key        = models.CharField(max_length=128, unique=True, db_index=True)
     expires_at = models.DateTimeField(default=default_expires_at)  # ✅ no lambda
     created_at = models.DateTimeField(auto_now_add=True)

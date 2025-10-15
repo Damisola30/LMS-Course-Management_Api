@@ -11,9 +11,9 @@ class WorkspaceFromApiKeyMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        print("Request GET parameters:", request.GET)
+        #print("Request GET parameters:", request.GET)
         #print("Request META:", request.META)
-        key = request.META.get("api_key", "") or request.META.get("HTTP_X_API_KEY", "") or request.GET.get("api_key","")
+        header_key = request.META.get("api_key", "") or request.META.get("HTTP_X_API_KEY", "") or request.GET.get("api_key","")
         if not key:
             print("no key found")
             auth = request.META.get("HTTP_AUTHORIZATION", "")
@@ -22,14 +22,14 @@ class WorkspaceFromApiKeyMiddleware:
 
         if key:
             try:
-                ak = ApiKey.objects.select_related("workspace").get(key=key)
-                if ak.expires_at and ak.expires_at <= timezone.now():
+                api_key = ApiKey.objects.get(key=header_key, expires_at__gt=now)
+                if api_key.expires_at and api_key.expires_at <= timezone.now():
                     print("expiredKey")
                     # expired → don’t attach workspace
                     pass
                 else:
-                    request.workspace = ak.workspace
-                    request.api_key = ak
+                    request.developer = api_key.developer
+                    
             except ApiKey.DoesNotExist:
                 pass
 
