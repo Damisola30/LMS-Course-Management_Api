@@ -5,7 +5,7 @@ from accounts.models import User
 
 
 class Teacher(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Teachers")
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     specialization = models.CharField(max_length=100)
@@ -19,7 +19,7 @@ class Teacher(models.Model):
 
 # Student model representing a student(User-Group) in the LMS
 class Student(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Students")
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     age = models.IntegerField()
     enrolled_date = models.DateField(auto_now_add=True)
@@ -30,8 +30,8 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
-class Guest (models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+class Guest(models.Model):
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Guests")
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -42,7 +42,7 @@ class Guest (models.Model):
     
 # Course model representing a course in the LMS
 class Course(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Courses")
     title = models.CharField(max_length=100)
     description = models.TextField()
     instructor = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
@@ -65,12 +65,13 @@ class Course(models.Model):
         return self.title
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["workspace","title"], name="uniq_course_title_per_workspace"),
+            models.UniqueConstraint(fields=["developer", "title"], name="uniq_course_title_per_developer"),
         ]
-        
+
+
 # CourseMaterial model representing materials for courses
 class CourseMaterial(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name= "CourseMaterials")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name = "materials")
     title = models.CharField(max_length=100)
     file = models.FileField(upload_to="course_materials/")
@@ -84,7 +85,7 @@ class CourseMaterial(models.Model):
     
 # Assignment model representing assignments for courses
 class Assignment(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Assignments")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="assignments")
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -101,7 +102,7 @@ class Assignment(models.Model):
 
 # Submission model representing student submissions for assignments
 class Submission(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Submissions")
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name="submissions")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     file = models.FileField(upload_to="submissions/")
@@ -116,7 +117,7 @@ class Submission(models.Model):
 
 # Lesson model representing individual lessons within a course
 class Lesson(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Lessons")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="lessons")
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -131,7 +132,7 @@ class Lesson(models.Model):
 
 # Progress model to track lesson completion by students
 class Progress(models.Model):
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="api_key")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Progress")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE) 
     completed = models.BooleanField(default=False)

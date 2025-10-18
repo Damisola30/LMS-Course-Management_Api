@@ -7,16 +7,8 @@ from .serializers import (
     TeacherSerializer, StudentSerializer, CourseSerializer, CourseMaterialSerializer,
     AssignmentSerializer, SubmissionStudentSerializer, SubmissionTeacherSerializer, LessonSerializer, ProgressSerializer, UserDetailsSerializer,UserSummarySerializer
 )
-from .permissions import (
-    IsCourseOwnerOrReadOnly,
-    IsOwnSubmissionOrCourseTeacher,
-    IsOwnProgressOrCourseTeacher,
-    IsOwnProfileOrAdmin,
-    HasWorkspace,
-    IsUserInWorkspace
-)
+from .permissions import  IsCourseOwnerOrReadOnly, IsOwnSubmissionOrCourseTeacher, IsOwnProgressOrCourseTeacher, IsOwnProfileOrAdmin, HasDeveloper, IsUserUnderDeveloper
 from rest_framework import serializers  # for ValidationError
-
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
@@ -29,7 +21,7 @@ from rest_framework.views import APIView
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
-    permission_classes = [HasWorkspace,IsUserInWorkspace, IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
+    permission_classes = [HasDeveloper,IsUserUnderDeveloper, IsAuthenticated, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -60,7 +52,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated,HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnProfileOrAdmin]
+    permission_classes = [IsAuthenticated,HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsOwnProfileOrAdmin]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -86,7 +78,7 @@ class StudentViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ListUsersViews(APIView):
-    permission_classes = [HasWorkspace]
+    permission_classes = [HasDeveloper]
 
     def get(self, request):
         workspace = request.workspace
@@ -106,7 +98,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     # IsAuthenticated ensures the user is logged in.
     # DjangoModelPermissions checks model-level add/view/change/delete perms.
     # IsCourseOwnerOrReadOnly enforces that only the instructor (teacher) can modify their own course.
-    permission_classes = [IsAuthenticated,HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated,HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -133,7 +125,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         ws = getattr(self.request, "workspace", None)
         if not ws:
-        # If you added HasWorkspace permission, this branch should never hit
+        # If you added HasDeveloper permission, this branch should never hit
             raise PermissionDenied("Missing or invalid API key (workspace not set).")
 
         user = self.request.user
@@ -195,7 +187,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 class CourseMaterialViewSet(viewsets.ModelViewSet):
     queryset = CourseMaterial.objects.all()
     serializer_class = CourseMaterialSerializer
-    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -238,7 +230,7 @@ class CourseMaterialViewSet(viewsets.ModelViewSet):
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
-    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace,  DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasDeveloper,IsUserUnderDeveloper,  DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -278,7 +270,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     queryset = Submission.objects.select_related("assignment__course", "student__user").all()
 
     # Use object-level permission plus model perms
-    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnSubmissionOrCourseTeacher]
+    permission_classes = [IsAuthenticated, HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsOwnSubmissionOrCourseTeacher]
 
     def get_serializer_class(self):
         user = self.request.user
@@ -360,7 +352,7 @@ class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
 
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsCourseOwnerOrReadOnly]
 
     def get_queryset(self):
         # Priority 1: API key workspace
@@ -393,7 +385,7 @@ class LessonViewSet(viewsets.ModelViewSet):
 class ProgressViewSet(viewsets.ModelViewSet):
     queryset = Progress.objects.select_related("lesson__course", "student").all()
     serializer_class = ProgressSerializer
-    permission_classes = [IsAuthenticated, HasWorkspace,IsUserInWorkspace, DjangoModelPermissions, IsOwnProgressOrCourseTeacher]
+    permission_classes = [IsAuthenticated, HasDeveloper,IsUserUnderDeveloper, DjangoModelPermissions, IsOwnProgressOrCourseTeacher]
 
     def get_queryset(self):
         # Priority 1: API key workspace

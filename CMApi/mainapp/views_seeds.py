@@ -4,14 +4,14 @@ from rest_framework import status, permissions
 from django.conf import settings
 
 from .seed_utils import seed_into_workspace
-from .permissions import HasWorkspace, IsUserInWorkspace
+from .permissions import HasDeveloper, IsUserUnderDeveloper
 
 class SeedThisWorkspaceView(APIView):
     """
     Dev-only endpoint to populate the *request.workspace* with demo data.
     Protect this in prod.
     """
-    permission_classes = [HasWorkspace]
+    permission_classes = [HasDeveloper]
 
     def post(self, request):
         ws = request.workspace

@@ -1,25 +1,83 @@
+#i gats clean up or declutter this part  
 from rest_framework import generics, permissions
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, DeveloperRegisterSerializer, DeveloperLoginSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import Group
 from rest_framework.permissions import IsAdminUser
-from .models import Workspace, ApiKey
+from .models import  ApiKey
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
-from mainapp.permissions import HasWorkspace
+from mainapp.permissions import HasDeveloper
 #from django.urls import reverse_lazy
 
 
 User = get_user_model()
+class DeveloperRegisterView(generics.CreateAPIView):
+    """
+    Endpoint: POST /auth/developer/register/
+    Creates a new developer (system owner)
+    """
+    serializer_class = DeveloperRegisterSerializer
+    permission_classes = [permissions.AllowAny]
 
+
+class DeveloperLoginView(APIView):
+    """
+    Endpoint: POST /auth/developer/login/
+    Logs in developer and issues JWT tokens
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = DeveloperLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
+class DeveloperProfileView(APIView):
+    """
+    Endpoint: GET /auth/developer/info/
+    Returns current developer account info
+    """
+    permission_classes = [permissions.IsAuthenticated, HasDeveloper]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "date_joined": user.date_joined,
+        })
+
+class DeleteAPIKeyView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        # Confirm developer identity
+        user = authenticate(username=username, password=password)
+        if user is None or user != request.user:
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_403_FORBIDDEN)
+
+        # Delete the API key if exists
+        api_key = APIKey.objects.filter(developer__user=user).first()
+        if not api_key:
+            return Response({"error": "No API key found"}, status=status.HTTP_404_NOT_FOUND)
+
+        api_key.delete()
+        return Response({"message": "API key deleted successfully"}, status=status.HTTP_200_OK)
+    
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny, HasWorkspace,IsAdminUser]
+    permission_classes = [permissions.AllowAny, HasDeveloper,IsAdminUser]
     # success_url = reverse_lazy('token_obtain_pair')
 
 
@@ -71,27 +129,27 @@ class ChangeUserRoleView(APIView):
 
 
 
-def _parse_ttl_hours(request, default=24, min_h=1, max_h=24*30):
-    """
-    Read ttl_hours from request.data and clamp/validate.
-    Returns (ttl_hours:int, error:str|None).
-    """
-    raw = request.data.get("hours", default)
-    try:
-        ttl = int(raw)
-    except (TypeError, ValueError):
-        return None, "ttl_hours must be an integer number of hours"
+# def _parse_ttl_hours(request, default=24, min_h=1, max_h=24*30):
+#     """
+#     Read ttl_hours from request.data and clamp/validate.
+#     Returns (ttl_hours:int, error:str|None).
+#     """
+#     raw = request.data.get("hours", default)
+#     try:
+#         ttl = int(raw)
+#     except (TypeError, ValueError):
+#         return None, "ttl_hours must be an integer number of hours"
 
-    if ttl < min_h or ttl > max_h:
-        return None, f"ttl_hours must be between {min_h} and {max_h} hours"
-    return ttl, None
+#     if ttl < min_h or ttl > max_h:
+#         return None, f"ttl_hours must be between {min_h} and {max_h} hours"
+#     return ttl, None
 
 
 class CreateApiKeyView(APIView):
-    permission_classes = []  # consider [permissions.IsAuthenticated]
+    permission_classes = [HasDeveloper]  # consider [permissions.IsAuthenticated]
 
     def post(self, request):
-        workspace_name = request.data.get("username")
+        user = request.data.get("username")
         if not workspace_name:
             return Response({"error": "username is required"}, status=status.HTTP_400_BAD_REQUEST)
 

@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
 from django.db import models, IntegrityError
+import secrets
 
 def default_expires_at():
     return timezone.now() + timedelta(days=1)
@@ -34,32 +35,38 @@ class User(AbstractUser):
 
 
 class ApiKey(models.Model):
-    developer = models.OneToOneField(User, on_delete=models.CASCADE, related_name="api_key")
-    key        = models.CharField(max_length=128, unique=True, db_index=True)
-    expires_at = models.DateTimeField(default=default_expires_at)  # ✅ no lambda
+    user  = models.OneToOneField(User, on_delete=models.CASCADE, related_name="api_key")
+    HashedKey   = models.CharField(max_length=128, unique=True, db_index=True)
+    last_used_at = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.workspace.name} - {self.key[:8]}..."
+        return f"{self.user.username}- {self.HashedKey[:8]}..."
 
     @classmethod
     def generate_key(cls, length=24):
-        # cryptographically secure, URL-safe
-        import secrets
         return secrets.token_urlsafe(length)
 
     @classmethod
-    def create_for_workspace(cls, workspace, ttl_hours=24):
+    def create_for_dev(cls, developer):
         # still let callers override TTL
-        expires = timezone.now() + timedelta(hours=ttl_hours) if ttl_hours else None
+        #expires = timezone.now() + timedelta(hours=ttl_hours) if ttl_hours else None
         # optionally retry on a rare uniqueness collision
         for _ in range(5):
             try:
-                return cls.objects.create(
-                    workspace=workspace,
-                    key=cls.generate_key(),
-                    expires_at=expires if ttl_hours is not None else default_expires_at(),
-                )
+                raw_key = cls.generate_key()
+                key_hash = cls.hash_key(raw_key)
+                obj = cls.objects.create(user=user, key_hash=key_hash)
+                return obj, raw_key  # Return both object and plaintext for showing once
             except IntegrityError:
                 continue
         raise RuntimeError("Could not generate a unique API key after several attempts.")
+    @staticmethod
+    def hash_key(raw_key):
+        import hashlib
+        return hashlib.sha256(raw_key.encode("utf-8")).hexdigest()
+
+    def verify_key(self, raw_key):
+        """Compare a provided API key to its hash."""
+        return self.key_hash == self.hash_key(raw_key)
