@@ -43,7 +43,7 @@ class DeveloperProfileView(APIView):
     Endpoint: GET /auth/developer/info/
     Returns current developer account info
     """
-    permission_classes = [permissions.IsAuthenticated, HasDeveloper]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         user = request.user
@@ -54,6 +54,46 @@ class DeveloperProfileView(APIView):
             "last_name": user.last_name,
             "date_joined": user.date_joined,
         })
+
+class DeveloperApiKeyView(APIView):
+    """
+    Handles developer API key operations.
+    
+    POST  → create or return API key (no rotation)
+    GET   → fetch API key info
+    DELETE → delete API key (requires username & password confirmation)
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        """Create or return the existing API key for the developer."""
+        developer = request.user
+        existing_key = ApiKey.objects.filter(developer=developer).first()
+
+        if existing_key:
+            return Response({
+                "message": "API key already exists.",
+                "api_key": existing_key.HashedKey
+            }, status=status.HTTP_200_OK)
+        
+        api_key_obj, raw_key = ApiKey.create_for_dev(developer)
+
+        return Response({
+            "message": "API key created successfully.",
+            "api_key": raw_key
+        }, status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        """Retrieve the current API key for the developer."""
+        developer = request.user
+        api_key = ApiKey.objects.filter(developer=developer).first()
+        if not api_key:
+            return Response({"error": "No API key found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({
+            "api_key": api_key.HashedKey,
+            "created_at": api_key.created_at,
+        }, status=status.HTTP_200_OK)
+
 
 class DeleteAPIKeyView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -68,13 +108,14 @@ class DeleteAPIKeyView(APIView):
             return Response({"error": "Invalid credentials"}, status=status.HTTP_403_FORBIDDEN)
 
         # Delete the API key if exists
-        api_key = APIKey.objects.filter(developer__user=user).first()
+        api_key = ApiKey.objects.filter(developer=user).first()
         if not api_key:
             return Response({"error": "No API key found"}, status=status.HTTP_404_NOT_FOUND)
 
         api_key.delete()
         return Response({"message": "API key deleted successfully"}, status=status.HTTP_200_OK)
     
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny, HasDeveloper,IsAdminUser]

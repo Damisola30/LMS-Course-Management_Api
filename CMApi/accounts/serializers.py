@@ -20,7 +20,7 @@ class DeveloperRegisterSerializer(serializers.ModelSerializer):
         raw_password = validated_data.pop("password")
         user = User(**validated_data)
         user.set_password(raw_password)
-        user.role = "admin"  # You can rename to "developer" if you prefer
+        user.role = "admin"  
         user.save()
         return user
 

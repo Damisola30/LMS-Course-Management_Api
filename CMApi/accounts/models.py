@@ -35,14 +35,14 @@ class User(AbstractUser):
 
 
 class ApiKey(models.Model):
-    user  = models.OneToOneField(User, on_delete=models.CASCADE, related_name="api_key")
+    developer  = models.OneToOneField(User, on_delete=models.CASCADE, related_name="api_key")
     HashedKey   = models.CharField(max_length=128, unique=True, db_index=True)
     last_used_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username}- {self.HashedKey[:8]}..."
+        return f"{self.developer.username}- {self.HashedKey[:8]}..."
 
     @classmethod
     def generate_key(cls, length=24):
@@ -57,7 +57,7 @@ class ApiKey(models.Model):
             try:
                 raw_key = cls.generate_key()
                 key_hash = cls.hash_key(raw_key)
-                obj = cls.objects.create(user=user, key_hash=key_hash)
+                obj = cls.objects.create(developer=developer, HashedKey=key_hash)
                 return obj, raw_key  # Return both object and plaintext for showing once
             except IntegrityError:
                 continue

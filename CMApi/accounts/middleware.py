@@ -14,13 +14,13 @@ class WorkspaceFromApiKeyMiddleware:
         #print("Request GET parameters:", request.GET)
         #print("Request META:", request.META)
         header_key = request.META.get("api_key", "") or request.META.get("HTTP_X_API_KEY", "") or request.GET.get("api_key","")
-        if not key:
+        if not header_key:
             print("no key found")
             auth = request.META.get("HTTP_AUTHORIZATION", "")
             if auth.lower().startswith("apikey "):
-                key = auth.split(" ", 1)[1].strip()
+                header_key = auth.split(" ", 1)[1].strip()
 
-        if key:
+        if header_key:
             try:
                 api_key = ApiKey.objects.get(key=header_key, expires_at__gt=now)
                 if api_key.expires_at and api_key.expires_at <= timezone.now():
