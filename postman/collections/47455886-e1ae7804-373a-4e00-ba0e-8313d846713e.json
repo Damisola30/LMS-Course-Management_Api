@@ -249,7 +249,7 @@
 							},
 							"status": "Created",
 							"code": 201,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "Text",
 							"header": [
 								{
 									"key": "Date",
@@ -520,7 +520,7 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "Text",
 							"header": [
 								{
 									"key": "Date",
@@ -2419,6 +2419,30 @@
 			],
 			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4",
 			"description": "Track which lessons each student has completed.\n\n**Common operations**\n\n- **GET /progress/** – list progress rows for tenant (student sees own; teacher sees for their courses).\n    \n- **POST /progress/** – create/toggle:\n    \n    - `{ \"student\": 31, \"lesson\": 44, \"completed\": true }`\n        \n- **PATCH /progress/:id/** – update completion status.\n    \n\n**Rules**\n\n- Unique per `(student, lesson)`; all entities must belong to tenant."
+		},
+		{
+			"name": "New Request",
+			"id": "47455886-8499bec8-d916-49e4-8b8b-8cd84a0a722a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "47455886-2830eb68-d10b-49ef-8808-50fbd1214dc2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
