@@ -118,7 +118,7 @@ class DeleteAPIKeyView(APIView):
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny, HasDeveloper,IsAdminUser]
+    permission_classes = [permissions.AllowAny, HasDeveloper]
     # success_url = reverse_lazy('token_obtain_pair')
 
 

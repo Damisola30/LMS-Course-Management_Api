@@ -57,11 +57,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ("username", "email", "password", "first_name", "last_name", "role")
 
     def create(self, validated_data):
+        print("Creating user with data:", validated_data)  # debug
         request = self.context["request"]
         developer = getattr(request, "developer", None)
 
         if not developer:
-            raise serializers.ValidationError("Valid API key header required.")
+            raise serializers.ValidationError("failed to get client Api-key from header(check middleware)")
 
         role = validated_data.pop("role")
         raw_password = validated_data.pop("password")

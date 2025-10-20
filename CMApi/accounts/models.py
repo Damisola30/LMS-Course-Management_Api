@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.db import models, IntegrityError
 import secrets
+import hashlib
 
 def default_expires_at():
     return timezone.now() + timedelta(days=1)
@@ -64,9 +65,9 @@ class ApiKey(models.Model):
         raise RuntimeError("Could not generate a unique API key after several attempts.")
     @staticmethod
     def hash_key(raw_key):
-        import hashlib
+        
         return hashlib.sha256(raw_key.encode("utf-8")).hexdigest()
 
     def verify_key(self, raw_key):
         """Compare a provided API key to its hash."""
-        return self.key_hash == self.hash_key(raw_key)
+        return self.HashedKey == self.hash_key(raw_key)

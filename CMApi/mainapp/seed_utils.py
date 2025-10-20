@@ -15,17 +15,17 @@ def ensure_groups():
         Group.objects.get_or_create(name=name)
 
 @transaction.atomic
-def seed_into_workspace(workspace, username_prefix: str | None = None,
+def seed_into_developer(developer, username_prefix: str | None = None,
                         teacher_count=2, student_count=3, guest_count=2):
     """
-    Idempotently seed demo data INTO the given workspace.
+    Idempotently seed demo data INTO the given developers account.
     username_prefix ensures global username uniqueness across workspaces.
     """
     ensure_groups()
 
     # default prefix based on workspace name (avoids global username collisions)
     if username_prefix is None:
-        username_prefix = f"{slugify(workspace.name)}__"
+        username_prefix = f"{slugify(developer.username)}__"
 
     # --- Teachers ---
     t_profiles = []
@@ -48,9 +48,9 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
         teacher = getattr(u, "teacher", None)
         if teacher is None:
             teacher = Teacher.objects.create(
-                user=u, workspace=workspace, specialization="General", experience=3
+                user=u, developer=developer, specialization="General", experience=3
             )
-        elif teacher.workspace_id != workspace.id:
+        elif teacher.developer_id != developer.id:
             # Same username already used in another tenant → skip
             continue
         t_profiles.append(teacher)
@@ -76,9 +76,9 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
         student = getattr(u, "student", None)
         if student is None:
             student = Student.objects.create(
-                user=u, workspace=workspace, age=20 + i
+                user=u, developer=developer, age=20 + i
             )
-        elif student.workspace_id != workspace.id:
+        elif student.developer_id != developer.id:
             continue
         s_profiles.append(student)
 
@@ -102,8 +102,8 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
 
         guest = getattr(u, "guest", None)
         if guest is None:
-            guest = Guest.objects.create(user=u, workspace=workspace)
-        elif guest.workspace_id != workspace.id:
+            guest = Guest.objects.create(user=u, developer=developer)
+        elif guest.developer_id != developer.id:
             continue
         g_profiles.append(guest)
 
@@ -112,7 +112,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
     for idx, teacher in enumerate(t_profiles, start=1):
         title = f"Demo Course {idx} - {teacher.user.username}"
         course, _ = Course.objects.get_or_create(
-            workspace=workspace,
+            developer=developer,
             title=title,
             defaults={
                 "description": f"Sample course {idx}",
@@ -134,7 +134,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
         # Lessons
         for n in range(1, 4):
             Lesson.objects.get_or_create(
-                workspace=workspace,
+                developer=developer,
                 course=course,
                 title=f"Lesson {n} - {course.title}",
                 defaults={"content": f"Demo content for lesson {n}", "order": n},
@@ -144,7 +144,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
         created_assignments = []
         for a in range(1, 2 + 1):
             assignment, _ = Assignment.objects.get_or_create(
-                workspace=workspace,
+                developer=developer,
                 course=course,
                 title=f"Assignment {a} - {course.title}",
                 defaults={
@@ -160,7 +160,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
                 filename = f"demo_{student.user.username}_{assignment.id}.txt"
                 content = ContentFile(b"Demo submission content", name=filename)
                 Submission.objects.get_or_create(
-                    workspace=workspace,
+                    developer=developer,
                     assignment=assignment,
                     student=student,
                     defaults={"file": content},
@@ -170,7 +170,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
         for lesson in course.lessons.all():
             for student in course.students.all():
                 Progress.objects.get_or_create(
-                    workspace=workspace,
+                    developer=developer,
                     student=student,
                     lesson=lesson,
                     defaults={"completed": False},
@@ -179,7 +179,7 @@ def seed_into_workspace(workspace, username_prefix: str | None = None,
             first_student = course.students.first()
             first_lesson = course.lessons.first()
             Progress.objects.update_or_create(
-                workspace=workspace,
+                developer=developer,
                 student=first_student,
                 lesson=first_lesson,
                 defaults={"completed": True},

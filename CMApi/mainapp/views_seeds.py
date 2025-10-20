@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from django.conf import settings
 
-from .seed_utils import seed_into_workspace
+from .seed_utils import seed_into_developer
 from .permissions import HasDeveloper, IsUserUnderDeveloper
 
-class SeedThisWorkspaceView(APIView):
+class SeedDeveloperDataView(APIView):
     """
     Dev-only endpoint to populate the *request.workspace* with demo data.
     Protect this in prod.
@@ -14,7 +14,7 @@ class SeedThisWorkspaceView(APIView):
     permission_classes = [HasDeveloper]
 
     def post(self, request):
-        ws = request.workspace
+        developer = request.developer
 
         # Optional: protect with staff-only or DEBUG
         if not settings.DEBUG and not request.user.is_staff:
@@ -25,14 +25,14 @@ class SeedThisWorkspaceView(APIView):
         student_count = int(request.data.get("student_count", 3))
         guest_count   = int(request.data.get("guest_count", 2))
 
-        seed_into_workspace(ws, username_prefix=None,
+        seed_into_developer(developer, username_prefix=None,
                             teacher_count=teacher_count,
                             student_count=student_count,
                             guest_count=guest_count)
 
         return Response(
             {
-                "detail": f"Seeded workspace '{ws.name}'",
+                "detail": f"Seeded your workspace '{developer.name}'",
                 "teachers": teacher_count,
                 "students": student_count,
                 "guests": guest_count,

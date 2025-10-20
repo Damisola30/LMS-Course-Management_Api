@@ -38,9 +38,9 @@ class CourseSerializer(serializers.ModelSerializer):
     students = serializers.PrimaryKeyRelatedField(many=True, required=False, queryset=Student.objects.all())
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        ws = getattr(self.context.get("request"), "workspace", None)
+        developer = getattr(self.context.get("request"), "developer", None)
         if ws:
-            self.fields["students"].queryset = Student.objects.filter(workspace=ws)
+            self.fields["students"].queryset = Student.objects.filter(developer=developer)
     class Meta:
         model = Course
         fields = [

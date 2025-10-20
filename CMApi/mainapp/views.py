@@ -25,9 +25,9 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Teacher.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Teacher.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:
@@ -56,9 +56,9 @@ class StudentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Student.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Student.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:
@@ -81,10 +81,10 @@ class ListUsersViews(APIView):
     permission_classes = [HasDeveloper]
 
     def get(self, request):
-        workspace = request.workspace
-        teachers = Teacher.objects.filter(workspace=workspace).select_related('user')
-        students = Student.objects.filter(workspace=workspace).select_related('user')
-        guests = Guest.objects.filter(workspace=workspace).select_related('user')
+        developer = request.developer
+        teachers = Teacher.objects.filter(developer=developer).select_related('user')
+        students = Student.objects.filter(developer=developer).select_related('user')
+        guests = Guest.objects.filter(developer=developer).select_related('user')
         return Response({
             "teachers": UserSummarySerializer([t.user for t in teachers if t.user], many=True).data,
             "students": UserSummarySerializer([s.user for s in students if s.user], many=True).data,
@@ -102,9 +102,9 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Course.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Course.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:
@@ -123,11 +123,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         return 'instructor' in (self.request.data or {})
     
     def perform_create(self, serializer):
-        ws = getattr(self.request, "workspace", None)
-        if not ws:
-        # If you added HasDeveloper permission, this branch should never hit
-            raise PermissionDenied("Missing or invalid API key (workspace not set).")
-
         user = self.request.user
 
         # If a teacher is creating, forbid them from supplying instructor explicitly.
@@ -191,9 +186,9 @@ class CourseMaterialViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return CourseMaterial.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return CourseMaterial.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:
@@ -205,14 +200,12 @@ class CourseMaterialViewSet(viewsets.ModelViewSet):
         return CourseMaterial.objects.none()
 
     def perform_create(self, serializer):
-        ws = getattr(self.request, "workspace", None)
-        if not ws:
-            raise PermissionDenied("Missing or invalid API key.")
+        developer = getattr(self.request, "developer", None)
         # enforce instructor same workspace (if you allow passing instructor)
         instructor = serializer.validated_data.get("instructor")
-        if instructor and instructor.workspace_id != ws.id:
+        if instructor and instructor.developer_id != developer.id:
             raise serializers.ValidationError("Instructor is not in this workspace.")
-        serializer.save(workspace=ws)  # 👈 force tenant    
+        serializer.save(developer=developer)  # 👈 force tenant    
         # ensure teacher creating material is set as owning course's instructor (optional)
         teacher = getattr(self.request.user, "teacher", None)
         if teacher:
@@ -234,9 +227,9 @@ class AssignmentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Assignment.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Assignment.objects.filter(developer=developer)
         
         user = self.request.user
         if user.is_superuser:
@@ -248,11 +241,11 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         return Assignment.objects.none()
 
     def perform_create(self, serializer):
-        ws = getattr(self.request, "workspace", None)
+        developer = getattr(self.request, "developer", None)
         course = serializer.validated_data.get("course")
-        if course.workspace_id != ws.id:
+        if course.developer_id != developer.id:
             raise serializers.ValidationError("Course does not belong to this workspace.")
-        serializer.save(workspace=ws)
+        serializer.save(developer=developer)
         teacher = getattr(self.request.user, "teacher", None)
         if teacher:
             # set/create assignment for a course if teacher owns it
@@ -282,9 +275,9 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Submission.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Submission.objects.filter(developer=developer)
 
 
         user = self.request.user
@@ -299,14 +292,14 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         return Submission.objects.none()
 
     def perform_create(self, serializer):
-        ws = getattr(self.request, "workspace", None)
+        developer = getattr(self.request, "developer", None)
         assignment = serializer.validated_data["assignment"]
-        if assignment.workspace_id != ws.id:
+        if assignment.developer_id != developer.id:
             raise serializers.ValidationError("Assignment not in this workspace.")
         user = self.request.user
-        if not hasattr(user, "student") or user.student.workspace_id != ws.id:
+        if not hasattr(user, "student") or user.student.developer_id != developer.id:
             raise PermissionDenied("Only students in this workspace can submit.")
-        serializer.save(workspace=ws, student=user.student)
+        serializer.save(developer=developer, student=user.student)
         # When a student creates a submission, attach their Student profile as owner.
         user = self.request.user
         if hasattr(user, "student"):
@@ -356,9 +349,9 @@ class LessonViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Lesson.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Lesson.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:
@@ -389,9 +382,9 @@ class ProgressViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Priority 1: API key workspace
-        workspace = getattr(self.request, "workspace", None)
-        if workspace:
-            return Progress.objects.filter(workspace=workspace)
+        developer = getattr(self.request, "developer", None)
+        if developer:
+            return Progress.objects.filter(developer=developer)
 
         user = self.request.user
         if user.is_superuser:

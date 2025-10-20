@@ -1,7 +1,11 @@
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.utils import timezone
 from .models import ApiKey
+from rest_framework import permissions
+
 
 class APIKeyAuthentication(BaseAuthentication):
     """
@@ -14,15 +18,14 @@ class APIKeyAuthentication(BaseAuthentication):
             return None  # let other authenticators (JWT) run
 
         try:
-            ak = ApiKey.objects.select_related("workspace", "workspace__owner").get(key=key, is_active=True)
+            ak = ApiKey.objects.select_related("developer", "developer__username").get(key=key, is_active=True)
         except ApiKey.DoesNotExist:
             raise AuthenticationFailed("Invalid API key")
-
-        if ak.expires_at and ak.expires_at < timezone.now():
-            raise AuthenticationFailed("API key expired")
+        if ak :
+            print("API key found for developer:", ak.developer.username)
 
         # Attach workspace and api_key object to request for later use in views
-        request.workspace = ak.workspace
+        request.developer = ak.developer
         request.api_key = ak
 
         # Return None to allow other authenticators (JWT) to set request.user.
@@ -30,23 +33,19 @@ class APIKeyAuthentication(BaseAuthentication):
         return None
 
 
-from rest_framework import permissions
-from rest_framework.exceptions import AuthenticationFailed
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 
 class TenantTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)  # authenticates username/password -> sets self.user
         request = self.context["request"]
-        ws = getattr(request, "workspace", None)
-        if not ws:
+        developer = getattr(request, "developer", None)
+        if not developer:
             raise AuthenticationFailed("Valid API key required.")
 
         user = self.user
         print("user loginng ",self.user)
         # Determine user's workspace membership (no need if you added user.workspace)
-        user_ws_id = None
+        user_developer_id = None
         if hasattr(user, "teacher"):
             user_ws_id = user.teacher.workspace_id
         elif hasattr(user, "student"):
@@ -58,12 +57,12 @@ class TenantTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Superusers: either allow any tenant or restrict as you wish
         if not user.is_superuser:
-            if user_ws_id != ws.id:
+            if user_developer_id != developer.id:
                 raise AuthenticationFailed("This user does not belong to this workspace.")
 
         # optional: embed workspace info in token claims for auditing
-        data["workspace_id"] = ws.id
-        data["workspace_name"] = ws.name
+        data["developer_id"] = developer.id
+        data["developer"] = developer.username
         return data
 
     @classmethod
