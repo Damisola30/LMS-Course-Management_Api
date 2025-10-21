@@ -170,6 +170,34 @@
 					"response": []
 				},
 				{
+					"name": "List Users",
+					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"listusers",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Change User Role",
 					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
 					"protocolProfileBehavior": {
@@ -214,34 +242,6 @@
 									"key": "api_key",
 									"value": "{{api_key}}",
 									"type": "text"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Users",
-					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"listusers",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
 								}
 							]
 						}
