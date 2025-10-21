@@ -8,7 +8,59 @@
 	"item": [
 		{
 			"name": "Admin",
-			"item": [],
+			"item": [
+				{
+					"name": "Change User Role",
+					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"admin",
+								"change-role",
+								"teacher1",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"id": "47455886-9a19d8dc-9166-49ff-9caf-f0115864bf3f"
 		},
 		{
@@ -262,57 +314,6 @@
 							"path": [
 								"token",
 								"refresh",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Change User Role",
-					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"accounts",
-								"admin",
-								"change-role",
-								"teacher1",
 								""
 							],
 							"query": [
