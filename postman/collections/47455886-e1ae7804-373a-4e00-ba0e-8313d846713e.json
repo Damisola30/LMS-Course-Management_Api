@@ -10,6 +10,34 @@
 			"name": "Admin",
 			"item": [
 				{
+					"name": "List Users",
+					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"listusers",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Change User Role",
 					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
 					"protocolProfileBehavior": {
@@ -59,29 +87,84 @@
 						}
 					},
 					"response": []
-				}
-			],
-			"id": "47455886-9a19d8dc-9166-49ff-9caf-f0115864bf3f"
-		},
-		{
-			"name": "Account",
-			"item": [
+				},
 				{
-					"name": "List Users",
-					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
+					"name": "Create Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73020d75-6bcd-4868-81fd-c017a325c3e7",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"demo_Workspace\",\r\n    \"hours\" :\"72\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"raw": "{{base_url}}/accounts/api-key/create/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"listusers",
+								"accounts",
+								"api-key",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seed Workspace",
+					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dev",
+								"seed",
 								""
 							],
 							"query": [
@@ -93,7 +176,13 @@
 						}
 					},
 					"response": []
-				},
+				}
+			],
+			"id": "47455886-9a19d8dc-9166-49ff-9caf-f0115864bf3f"
+		},
+		{
+			"name": "Account",
+			"item": [
 				{
 					"name": "Register User",
 					"id": "47455886-45057482-a25e-4b6e-bc11-25952dbf7a4e",
@@ -321,95 +410,6 @@
 									"key": "api_key",
 									"value": "{{api_key}}",
 									"type": "text"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Api_Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "73020d75-6bcd-4868-81fd-c017a325c3e7",
-								"exec": [
-									"let data = pm.response.json();\r",
-									"pm.environment.set(\"api_key\", data.api_key);"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "47455886-0019b4e3-c3ef-4857-8080-8454c50cc5e5",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"demo_Workspace\",\r\n    \"hours\" :\"72\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/accounts/api-key/create/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"accounts",
-								"api-key",
-								"create",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Seed Workspace",
-					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"seed",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
 								}
 							]
 						}
