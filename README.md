@@ -1,39 +1,39 @@
 # LMS Course Management API (Django + DRF)
-
-A multi-tenant Learning Management System (LMS) API that separates **tenants by workspace** (API Key) and authenticates **actors** (teacher / student / admin / guest) with JWT. It exposes endpoints to manage teachers, students, courses, lessons, materials, assignments, submissions, and progress—with clean per-workspace isolation.
+## Client-based Multi-Tenant Learning Management System
+A Client-based multi-tenant Learning Management System (LMS) API that separates **tenants by workspace** (API Key) and authenticates **actors** (teacher / student / admin / guest) with JWT. It exposes endpoints to manage teachers, students, courses, lessons, materials, assignments, submissions, and progress—with clean per-workspace isolation.
 
 > **Tenant model in one line**
-> **API Key** ⇒ identifies the **workspace (tenant)**.
-> **JWT** ⇒ authenticates the **user** (teacher / student / admin / guest) and enforces permissions.
+> **API Key** ⇒ identifies the **Client** (tenant).
+> **JWT** ⇒ authenticates the **Actors** (teacher / student / admin / guest) and enforces permissions.
 
 ---
 
 ## 1) Project Overview
 
-This API lets multiple developers (or customers) share a single deployment while keeping data isolated per **workspace**. Each workspace has **one API key**, and actions inside the workspace are performed by **users** with roles. A typical flow:
+This API lets multiple developers (or customers) share a single deployment while keeping data isolated per **workspace**. Each Developer account can manage multiple users, courses, and roles. Developers are identified by unique API keys that define their data scope. and actions inside the developer’s environment are performed by **Actors** with roles. A typical flow:
 
-1. Create (or fetch) a **workspace API key**.
-2. Register/login users **inside that workspace**.
+1. Create (or fetch) a **Client API key**.
+2. Register/login users **under that workspace**.
 3. Call LMS endpoints using **both** headers:
 
-   * `X-API-Key: <workspace-api-key>` (tenant)
+   * `X-API-Key: <client-api-key>` (tenant)
    * `Authorization: Bearer <jwt>` (actor)
 
 ---
 
 ## 2) Features
 
-* **Multi-tenancy via Workspace + API Key**
+* **Multi-tenancy via Developer + API Key**
 
-  * One key per workspace (rotation supported).
-  * Middleware attaches `request.workspace` from the API key.
+  * One key per client (rotation supported).
+  * Middleware attaches `request.developer` from the API key.
 * **Role-based actors with JWT**
 
   * Users belong to a workspace via Teacher/Student/Guest profile.
   * Tenant-aware login: users can only login within their own workspace.
 * **Teacher & Student management**
 
-  * Per-workspace Teacher/Student/Guest profiles.
+  * Per-developer Teacher/Student/Guest profiles.
   * Group/role assignment for permissions.
 * **Courses & Enrollment**
 
@@ -49,8 +49,7 @@ This API lets multiple developers (or customers) share a single deployment while
 
   * Track lesson completion per student.
 * **Seeding**
-
-  * DRF scoped throttles (per IP / per user).
+  * Seed DEMO actors ... into your developer environment
 
 ---
 
@@ -60,73 +59,64 @@ This API lets multiple developers (or customers) share a single deployment while
 * **Django** 4.x
 * **Django REST Framework** (DRF)
 * **SimpleJWT** for JWT auth
-* **SQLite** (local) / **PostgreSQL** (recommended for production)
+* **PostgreSQL** 
 ---
 
 ## 4) Models Description
 
 > Only key fields are shown for brevity; your code contains additional timestamps and options.
 
-### accounts.Workspace
-
-* `name` (unique) — workspace/tenant name.
-* *(optional)* `owner` — if you cap workspaces per user.
 
 ### accounts.ApiKey
 
-* `workspace` (OneToOne) — one key per workspace.
-* `key` (unique) — URL-safe string.
+* `developer` developer (OneToOne) — one key per developer.
+* `HashedKey` (unique) — URL-safe string.
 * `expires_at` — key expiry.
 
-### accounts.User (custom)
-
-* Extends `AbstractUser`.
-* `role` — one of `teacher|student|guest|admin`.
-* *(optional)* `workspace` FK if you choose to store a direct link.
 
 ### mainapp.Teacher
 
-* `workspace` (FK → Workspace)
+* `developer` (FK → Developer)
 * `user` (OneToOne → User)
 * `specialization`, `experience`, `bio`…
 
 ### mainapp.Student
 
-* `workspace` (FK → Workspace)
+* `developer` (FK → Developer)
 * `user` (OneToOne → User)
 * `age`, `enrolled_date`…
 
 ### mainapp.Guest
 
-* `workspace` (FK → Workspace)
+* `developer` (FK → Developer)
 * `user` (OneToOne → User)
 
 ### mainapp.Course
 
-* `workspace` (FK → Workspace)
-* `title` (unique **per workspace** via `UniqueConstraint(workspace, title)`)
+* `developer` (FK → Developer)
+* `title` (unique **per developer** via `UniqueConstraint(develoepr, title)`)
 * `description`, `instructor` (FK → Teacher), `students` (M2M → Student)
 * `start_date`, `end_date`, `duration`, `level`, `category`, `summary`
 
 ### mainapp.CourseMaterial
 
-* `workspace` (FK), `course` (FK), `title`, `file`
+* `developer` (FK), `course` (FK), `title`, `file`
 
 ### mainapp.Lesson
 
-* `workspace` (FK), `course` (FK), `title`, `content`, `order`
+* `developer` (FK), `course` (FK), `title`, `content`, `order`
 
 ### mainapp.Assignment
 
-* `workspace` (FK), `course` (FK), `title`, `description`, `due_date`
+* `developer` (FK), `course` (FK), `title`, `description`, `due_date`
 
 ### mainapp.Submission
 
-* `workspace` (FK), `assignment` (FK), `student` (FK), `file`, `grade`
+* `developer` (FK), `assignment` (FK), `student` (FK), `file`, `grade`
 
 ### mainapp.Progress
 
-* `workspace` (FK), `student` (FK), `lesson` (FK), `completed` (bool)
+* `developer` (FK), `student` (FK), `lesson` (FK), `completed` (bool)
 * `unique_together(student, lesson)`; ordered by `created_at`
 
 ---
@@ -149,11 +139,11 @@ CMApi/
 │  └─ __init__.py
 │
 ├─ accounts/                # Authentication, tenancy, API keys
-│  ├─ models.py             # Workspace, ApiKey, custom User
+│  ├─ models.py             # Developer, ApiKey, custom User
 │  ├─ serializers.py        # RegisterSerializer, etc.
 │  ├─ views.py              # Register, Change Role, API key endpoints
 │  ├─ authentication.py     # (optional) auth helpers
-│  ├─ middleware.py         # WorkspaceFromApiKey + AuditLog middleware
+│  ├─ middleware.py         # DeveloperFromApiKey middleware
 │  ├─ urls.py               # Accounts routes
 │  ├─ admin.py              # Django admin registrations
 │  ├─ migrations/           # DB migrations for accounts app
@@ -162,10 +152,10 @@ CMApi/
 ├─ mainapp/                 # Core LMS domain
 │  ├─ models.py             # Teacher, Student, Guest, Course, Lesson, ...
 │  ├─ serializers.py        # Per-model serializers
-│  ├─ permissions.py        # IsUserInWorkspace, IsCourseOwnerOrReadOnly, ...
+│  ├─ permissions.py        # IsUserUnderDeveloper, IsCourseOwnerOrReadOnly, ...
 │  ├─ views.py              # ViewSets for courses/materials/assignments/etc.
-│  ├─ views_seeds.py        # Dev endpoint: seed current workspace
-│  ├─ seed_utils.py         # Reusable seeding logic (teachers/students/guests...)
+│  ├─ views_seeds.py        # Dev endpoint: seed current developer environment
+│  ├─ seed_utils.py         # Reusable seeding logic for per-developer demo data
 │  ├─ urls.py               # Mainapp routes (ViewSets / routers)
 │  ├─ migrations/           # DB migrations for mainapp
 │  └─ management/commands/  # e.g., seed_demo.py (shared demo tenant)
@@ -181,8 +171,8 @@ CMApi/
 
 **Notes**
 
-* **accounts.middleware** attaches `request.workspace` from the `X-API-Key` header and writes audit events.
-* **mainapp.permissions** ensure the JWT user belongs to the same workspace (`IsUserInWorkspace`) and enforce object rules.
+* **accounts.middleware** attaches `request.developer` from the `X-API-Key` header.
+* **mainapp.permissions** ensure the JWT user belongs to the same workspace (`IsUserUnderDeveloper`) and enforce object rules.
 * **seed_utils.py** centralizes demo-data creation; **views_seeds.py** exposes a dev-only endpoint to seed the caller’s workspace.
 * Keep `media/` out of version control in production and use a proper object store (e.g., S3, GCS).
 
@@ -228,17 +218,17 @@ python manage.py runserver
 
 ### Auth model at a glance
 
-* **Header 1: API Key (tenant)**
+* **Header 1: API Key (client)**
 
-  * `X-API-Key: <workspace-api-key>`
-  * or `Authorization: ApiKey <workspace-api-key>`
+  * `X-API-Key: <developer-api-key>`
+  * or `Authorization: ApiKey <developer-api-key>`
 * **Header 2: JWT (actor)**
 
   * `Authorization: Bearer <jwt>`
 
 Most endpoints require **both**.
 
-### 7.1 Create / Rotate Workspace API Key
+### 7.1 Create Developer API Key
 
 **One key per workspace** (OneToOne). If a key exists and is active:
 
@@ -261,8 +251,6 @@ Body:
 {
   "message": "API key created successfully",
   "api_key": "RAW-KEY-HERE",
-  "expires_at": "2025-10-01T12:34:56Z",
-  "hours": 24
 }
 ```
 
@@ -270,18 +258,17 @@ Body:
 
 ```json
 {
-  "message": "API key already exists for this workspace",
+  "message": "API key already exists for this developer",
   "api_key": "",
   "key_prefix": "AbCdEf12",
-  "expires_at": "2025-10-01T12:34:56Z"
 }
 ```
 
 > **Best practice:** Protect this endpoint with `IsAuthenticated` + throttles.
 
-### 7.2 Tenant-aware Registration
+### 7.2 Developer-aware Registration
 
-**Requires API Key header** to put the new user in the correct workspace.
+**Requires API Key header** to put the new user in the correct Developer environment.
 
 ```
 POST /api/accounts/register/
@@ -298,12 +285,12 @@ Body:
 }
 ```
 
-* Creates `User` + `Teacher/Student/Guest` profile **in this workspace** (atomic; rolls back on error).
+* Creates `User` + `Teacher/Student/Guest` profile **under this developer** (atomic; rolls back on error).
 * Assigns Group by role.
 
 ### 7.3 Tenant-aware Login (JWT)
 
-Use the **tenant-aware** login so users **must** provide the workspace API key of their tenant.
+Use the **Developer-aware** login so users **must** provide the workspace API key of their tenant.
 
 ```
 POST /api/login/
@@ -322,8 +309,8 @@ Body:
 {
   "refresh": "<refresh-token>",
   "access": "<jwt-access-token>",
-  "workspace_id": 123,
-  "workspace_name": "alice_workspace"
+  "developer_id": 123,
+  "developer_name": "alice"
 }
 ```
 
@@ -338,7 +325,7 @@ Body: { "refresh": "<refresh-token>" }
 
 ### 7.4 Dev Seeding Endpoint (per-workspace)
 
-Seeds demo Teachers, Students, Guests, Courses, Lessons, Assignments, Submissions, Progress **into the caller’s workspace**. Idempotent. Defaults: 2 teachers, 3 students, 2 guests.
+Seeds demo Teachers, Students, Guests, Courses, Lessons, Assignments, Submissions, Progress **into the caller’s developer account**. Idempotent. Defaults: 2 teachers, 3 students, 2 guests.
 
 ```
 POST /api/dev/seed/
@@ -357,7 +344,7 @@ Body: {}
 * **Teachers**
 
   * `GET /api/teachers/`
-  * `POST /api/teachers/` *(if allowed)*
+
 * **Students**
 
   * `GET /api/students/`
@@ -367,16 +354,16 @@ Body: {}
   * `POST /api/courses/`
 
     * Teachers cannot set `instructor`; it’s auto-assigned to themselves.
-    * Admins may set `instructor`, but it **must** be in the same workspace.
+    * Admins may set `instructor`, but it **must** be in the same developer account.
 * **Lessons, Materials, Assignments, Submissions, Progress**
 
-  * All `get_queryset()` filter by `request.workspace`.
-  * All `perform_create()` force `workspace=ws` and validate cross-tenant relations.
+  * All `get_queryset()` filter by `request.developer`.
+  * All `perform_create()` force `developer=developer` and validate cross-tenant relations.
 
 **Headers required for most operations:**
 
 ```
-X-API-Key: <workspace-api-key>
+X-API-Key: <developer-api-key>
 Authorization: Bearer <jwt>
 ```
 
@@ -384,8 +371,8 @@ Authorization: Bearer <jwt>
 
 Add these to sensitive endpoints:
 
-* `HasWorkspace` — requires a valid API key (tenant).
-* `IsUserInWorkspace` — ensures JWT user’s profile belongs to the same workspace.
+* `HasDeveloper` — requires a valid API key (tenant).
+* `IsUserUnderDeveloper` — ensures JWT user’s profile belongs to the same workspace.
 * `DjangoModelPermissions` — uses Groups/Permissions.
 * `IsCourseOwnerOrReadOnly` — example object-level rule.
 ```
