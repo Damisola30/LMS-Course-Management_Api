@@ -2421,6 +2421,11 @@
 			"description": "Track which lessons each student has completed.\n\n**Common operations**\n\n- **GET /progress/** – list progress rows for tenant (student sees own; teacher sees for their courses).\n    \n- **POST /progress/** – create/toggle:\n    \n    - `{ \"student\": 31, \"lesson\": 44, \"completed\": true }`\n        \n- **PATCH /progress/:id/** – update completion status.\n    \n\n**Rules**\n\n- Unique per `(student, lesson)`; all entities must belong to tenant."
 		},
 		{
+			"name": "Admin",
+			"item": [],
+			"id": "47455886-9a19d8dc-9166-49ff-9caf-f0115864bf3f"
+		},
+		{
 			"name": "New Request",
 			"id": "47455886-8499bec8-d916-49e4-8b8b-8cd84a0a722a",
 			"protocolProfileBehavior": {
