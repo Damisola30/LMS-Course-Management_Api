@@ -111,6 +111,104 @@
 					"response": []
 				},
 				{
+					"name": "Change User Role",
+					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"admin",
+								"change-role",
+								"teacher1",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Api_Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd31caba-e938-495f-a073-8a668ff4a06d",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"api_key\", data.api_key);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "47455886-04221f0c-e497-49a4-a13a-2dce6ad140a2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/api-key/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"api-key",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Login",
 					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
 					"protocolProfileBehavior": {
@@ -2325,57 +2423,6 @@
 			"description": "Track which lessons each student has completed.\n\n**Common operations**\n\n- **GET /progress/** – list progress rows for tenant (student sees own; teacher sees for their courses).\n    \n- **POST /progress/** – create/toggle:\n    \n    - `{ \"student\": 31, \"lesson\": 44, \"completed\": true }`\n        \n- **PATCH /progress/:id/** – update completion status.\n    \n\n**Rules**\n\n- Unique per `(student, lesson)`; all entities must belong to tenant."
 		},
 		{
-			"name": "Change User Role",
-			"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{access_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"accounts",
-						"admin",
-						"change-role",
-						"teacher1",
-						""
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{api_key}}",
-							"type": "text"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "List Users",
 			"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
 			"protocolProfileBehavior": {
@@ -2398,53 +2445,6 @@
 							"key": "api_key",
 							"value": "{{api_key}}"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Api_Key",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "dd31caba-e938-495f-a073-8a668ff4a06d",
-						"exec": [
-							"let data = pm.response.json();\r",
-							"pm.environment.set(\"api_key\", data.api_key);"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"id": "47455886-04221f0c-e497-49a4-a13a-2dce6ad140a2",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/accounts/api-key/",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"accounts",
-						"api-key",
-						""
 					]
 				}
 			},
