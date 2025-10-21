@@ -58,49 +58,20 @@
 					"response": []
 				},
 				{
-					"name": "Seed Workspace",
-					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"name": "Create Account",
+					"id": "47455886-3b3c88c3-7494-43e7-9c7b-cc28eeb4531e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"seed",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
-								}
-							]
-						}
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				},
 				{
-					"name": "Create Account",
-					"id": "47455886-3b3c88c3-7494-43e7-9c7b-cc28eeb4531e",
+					"name": "Login",
+					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -209,14 +180,71 @@
 					"response": []
 				},
 				{
-					"name": "Login",
-					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
+					"name": "Seed Workspace",
+					"id": "47455886-fd7c1ead-4f78-472d-8dce-54ec34da4678",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dev",
+								"seed",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"listusers",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -2421,34 +2449,6 @@
 			],
 			"id": "47455886-13294520-5ea9-4579-a923-99ee3beb47c4",
 			"description": "Track which lessons each student has completed.\n\n**Common operations**\n\n- **GET /progress/** – list progress rows for tenant (student sees own; teacher sees for their courses).\n    \n- **POST /progress/** – create/toggle:\n    \n    - `{ \"student\": 31, \"lesson\": 44, \"completed\": true }`\n        \n- **PATCH /progress/:id/** – update completion status.\n    \n\n**Rules**\n\n- Unique per `(student, lesson)`; all entities must belong to tenant."
-		},
-		{
-			"name": "List Users",
-			"id": "47455886-15522770-10d7-497a-929c-7ccd02aeb701",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"listusers",
-						""
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{api_key}}"
-						}
-					]
-				}
-			},
-			"response": []
 		},
 		{
 			"name": "New Request",
