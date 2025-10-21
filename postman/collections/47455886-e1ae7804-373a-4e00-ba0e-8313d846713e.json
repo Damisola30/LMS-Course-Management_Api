@@ -10,6 +10,30 @@
 			"name": "Admin",
 			"item": [
 				{
+					"name": "Create Account",
+					"id": "47455886-3b3c88c3-7494-43e7-9c7b-cc28eeb4531e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
 					"name": "Create Api_Key",
 					"event": [
 						{
@@ -52,81 +76,6 @@
 								"api-key",
 								"create",
 								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Account",
-					"id": "47455886-3b3c88c3-7494-43e7-9c7b-cc28eeb4531e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Change User Role",
-					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"accounts",
-								"admin",
-								"change-role",
-								"teacher1",
-								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}",
-									"type": "text"
-								}
 							]
 						}
 					},
@@ -214,6 +163,57 @@
 								{
 									"key": "api_key",
 									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Role",
+					"id": "47455886-9cd2beb3-f3e1-4067-b0e3-215d288b03dd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Teacher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/accounts/admin/change-role/teacher1/?api_key={{api_key}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"accounts",
+								"admin",
+								"change-role",
+								"teacher1",
+								""
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{api_key}}",
+									"type": "text"
 								}
 							]
 						}
