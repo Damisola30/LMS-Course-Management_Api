@@ -178,8 +178,20 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create Account",
 					"id": "47455886-3b3c88c3-7494-43e7-9c7b-cc28eeb4531e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
