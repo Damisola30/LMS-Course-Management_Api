@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"username\":\"Dev2\",\r\n    \"email\":\"Dev2@gmail.com\",\r\n    \"password\":\"Dev2\",\r\n    \"first_name\":\"Dev\",\r\n    \"last_name\":\"2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -28,10 +28,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/accounts/admin/register/",
+							"raw": "http://127.0.0.1:8000/api/accounts/admin/register/",
+							"protocol": "http",
 							"host": [
-								"{{base_url}}"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "8000",
 							"path": [
 								"api",
 								"accounts",
