@@ -455,7 +455,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/accounts/admin/change-role/dev2__teacher1/?api_key={{api_key}}",
+							"raw": "{{base_url}}/api/accounts/admin/change-role/dev2__teacher1/",
 							"host": [
 								"{{base_url}}"
 							],
@@ -466,16 +466,135 @@
 								"change-role",
 								"dev2__teacher1",
 								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
-								}
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Api Key",
+					"id": "47455886-b08a0ee7-11fa-4fbf-85d2-b9337ba877a0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"Dev2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/accounts/admin/api-key/delete/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"admin",
+								"api-key",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "47455886-fd2ff530-ac6f-4172-853d-cfe1ee258562",
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\" : \"Dev2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/admin/api-key/delete/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"admin",
+										"api-key",
+										"delete",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 23 Oct 2025 13:47:15 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"message\": \"API key deleted successfully\"\n}"
+						}
+					]
 				}
 			],
 			"id": "47455886-9a19d8dc-9166-49ff-9caf-f0115864bf3f"
