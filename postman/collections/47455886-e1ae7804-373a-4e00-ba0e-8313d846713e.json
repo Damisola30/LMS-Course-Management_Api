@@ -127,11 +127,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/admin/api-key/",
+							"raw": "{{base_url}}/api/accounts/admin/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"accounts",
 								"admin",
 								"api-key",
