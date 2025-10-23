@@ -32,7 +32,7 @@ class SeedDeveloperDataView(APIView):
 
         return Response(
             {
-                "detail": f"Seeded your workspace '{developer.name}'",
+                "detail": f"Seeded your workspace '{developer.username}'",
                 "teachers": teacher_count,
                 "students": student_count,
                 "guests": guest_count,
