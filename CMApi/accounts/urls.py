@@ -1,9 +1,11 @@
 from django.urls import path
 from .views import RegisterView, ChangeUserRoleView, DeveloperRegisterView, DeveloperLoginView, DeveloperProfileView, DeveloperApiKeyView, DeleteAPIKeyView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path("admin/register/", DeveloperRegisterView.as_view(), name="developer-register"),
     path("admin/login/", DeveloperLoginView.as_view(), name="developer-login"),
+    path('admin/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("admin/info/", DeveloperProfileView.as_view(), name="developer-info"),
     path("admin/api-key/", DeveloperApiKeyView.as_view(), name="developer-api-key"),
     path("admin/api-key/delete/", DeleteAPIKeyView.as_view(), name="developer-api-key-delete"),
