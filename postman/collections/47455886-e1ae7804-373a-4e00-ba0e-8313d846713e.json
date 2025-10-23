@@ -174,11 +174,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Dev2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,11 +196,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/api-key/",
+							"raw": "{{base_url}}/api/accounts/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"accounts",
 								"api-key",
 								""
