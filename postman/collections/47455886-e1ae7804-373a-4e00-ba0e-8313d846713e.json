@@ -244,11 +244,11 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Dev2\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -256,13 +256,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/accounts/api-key/",
+							"raw": "{{base_url}}/api/accounts/admin/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"accounts",
+								"admin",
 								"api-key",
 								""
 							]
