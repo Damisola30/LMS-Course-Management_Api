@@ -95,6 +95,21 @@
 				},
 				{
 					"name": "Admin refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10b524d4-1989-495f-b7eb-610e9af275fd",
+								"exec": [
+									"let data = pm.response.json()\r",
+									"pm.environment.set(\"access_token\", data.access)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "47455886-af551c4c-d8ca-4c28-b9f4-17ce34f8d44f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -110,7 +125,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -229,11 +244,11 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Dev2\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -241,13 +256,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/accounts/api-key/",
+							"raw": "{{base_url}}/api/accounts/admin/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"accounts",
+								"admin",
 								"api-key",
 								""
 							]
