@@ -137,10 +137,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/accounts/admin/token/refresh/",
+							"raw": "http://127.0.0.1:8000/api/accounts/admin/token/refresh/",
+							"protocol": "http",
 							"host": [
-								"{{base_url}}"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "8000",
 							"path": [
 								"api",
 								"accounts",
