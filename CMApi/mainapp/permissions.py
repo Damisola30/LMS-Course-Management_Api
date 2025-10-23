@@ -78,10 +78,10 @@ class IsAdminRole(BasePermission):
     """
     Allows access only to users whose role is set to 'admin'.
     """
-
+    message = "Admin role required."   
     def has_permission(self, request, view):
         user = request.user
-        print("Checking IsAdminUserRole for user:", user)  # debug
+        #print("Checking IsAdminRole for user:", user)  # debug
 
         return bool(user and user.is_authenticated and getattr(user, "role", None) == "admin")
 

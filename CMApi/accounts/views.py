@@ -99,22 +99,26 @@ class DeleteAPIKeyView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        username = request.data.get("username")
         password = request.data.get("password")
 
-        # Confirm developer identity
-        user = authenticate(username=username, password=password)
-        if user is None or user != request.user:
+        if not password:
+            return Response({"error": "Password is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not request.user.check_password(password):
             return Response({"error": "Invalid credentials"}, status=status.HTTP_403_FORBIDDEN)
 
-        # Delete the API key if exists
-        api_key = ApiKey.objects.filter(developer=user).first()
-        if not api_key:
+        try:
+            api_key = ApiKey.objects.get(developer=request.user)
+            api_key.delete()
+            return Response({"message": "API key deleted successfully"}, status=status.HTTP_200_OK)
+        except ApiKey.DoesNotExist:
             return Response({"error": "No API key found"}, status=status.HTTP_404_NOT_FOUND)
-
-        api_key.delete()
-        return Response({"message": "API key deleted successfully"}, status=status.HTTP_200_OK)
-    
+        except Exception as e:
+            #print the error message for debugging purposes
+            print("Error deleting API key: %s", str(e))
+            return Response({"error": "Internal server error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+        
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -123,7 +127,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class ChangeUserRoleView(APIView):
-    permission_classes = [IsAdminRole, IsAdminUser]  # only admin/staff can change roles
+    permission_classes = [IsAdminRole]  # only admin/staff can change roles
 
     def post(self, request, username):
         """

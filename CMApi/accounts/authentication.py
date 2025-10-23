@@ -74,5 +74,5 @@ class TenantTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class TenantTokenObtainPairView(TokenObtainPairView):
-    permission_classes = [permissions.AllowAny]  # Workspace is enforced by serializer via header
+    permission_classes = [permissions.AllowAny] 
     serializer_class = TenantTokenObtainPairSerializer
