@@ -2,11 +2,11 @@ from django.urls import path
 from .views import RegisterView, ChangeUserRoleView, DeveloperRegisterView, DeveloperLoginView, DeveloperProfileView, DeveloperApiKeyView, DeleteAPIKeyView
 
 urlpatterns = [
-    path("developer/register/", DeveloperRegisterView.as_view(), name="developer-register"),
-    path("developer/login/", DeveloperLoginView.as_view(), name="developer-login"),
-    path("developer/info/", DeveloperProfileView.as_view(), name="developer-info"),
-    path("developer/api-key/", DeveloperApiKeyView.as_view(), name="developer-api-key"),
-    path("developer/api-key/delete/", DeleteAPIKeyView.as_view(), name="developer-api-key-delete"),
+    path("admin/register/", DeveloperRegisterView.as_view(), name="developer-register"),
+    path("admin/login/", DeveloperLoginView.as_view(), name="developer-login"),
+    path("admin/info/", DeveloperProfileView.as_view(), name="developer-info"),
+    path("admin/api-key/", DeveloperApiKeyView.as_view(), name="developer-api-key"),
+    path("admin/api-key/delete/", DeleteAPIKeyView.as_view(), name="developer-api-key-delete"),
     path("register/", RegisterView.as_view(), name="register"),
     path("admin/change-role/<str:username>/", ChangeUserRoleView.as_view(), name="change_role"),
     #path("api-key/create/", CreateApiKeyView.as_view(), name="create_api_key"),
