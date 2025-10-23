@@ -460,9 +460,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}}/api/accounts/admin/change-role/dev2__teacher1/?api_key={{api_key}}",
+							"raw": "{{base_url}}/api/accounts/admin/change-role/dev2__teacher1/",
 							"host": [
-								"{{base_url}}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -471,12 +471,6 @@
 								"change-role",
 								"dev2__teacher1",
 								""
-							],
-							"query": [
-								{
-									"key": "api_key",
-									"value": "{{api_key}}"
-								}
 							]
 						}
 					},
