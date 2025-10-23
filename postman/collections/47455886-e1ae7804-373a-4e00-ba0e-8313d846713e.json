@@ -16,20 +16,125 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Dev2\",\r\n    \"email\":\"Dev2@gmail.com\",\r\n    \"password\":\"Dev2\",\r\n    \"first_name\":\"Dev\",\r\n    \"last_name\":\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/accounts/admin/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"admin",
+								"register",
+								""
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0348f647-f17f-45e3-a569-f1a9dc14aef8",
+								"exec": [
+									"let data = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", data.access);\r",
+									"pm.environment.set(\"refresh_token\", data.refresh)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "47455886-72539047-8081-4ab9-b05e-36da28011709",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Dev2\",\r\n    \"password\" : \"Dev2\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/accounts/admin/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"admin",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin refresh token",
+					"id": "47455886-af551c4c-d8ca-4c28-b9f4-17ce34f8d44f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\" : \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/accounts/admin/token/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"admin",
+								"token",
+								"refresh",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -55,11 +160,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"demo_Workspace\",\r\n    \"hours\" :\"72\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"Dev2\",\r\n    \"password\" : \"Dev2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -67,14 +182,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/api-key/create/",
+							"raw": "{{base_url}}/api/accounts/admin/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"accounts",
+								"admin",
 								"api-key",
-								"create",
 								""
 							]
 						}
@@ -103,11 +219,21 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"demo_workspace\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Dev2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,11 +241,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/accounts/api-key/",
+							"raw": "{{base_url}}/api/accounts/api-key/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"accounts",
 								"api-key",
 								""
