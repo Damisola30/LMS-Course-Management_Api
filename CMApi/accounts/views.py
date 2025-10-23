@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
-from mainapp.permissions import HasDeveloper
+from mainapp.permissions import HasDeveloper, IsAdminRole
 #from django.urls import reverse_lazy
 
 
@@ -123,7 +123,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class ChangeUserRoleView(APIView):
-    permission_classes = [IsAdminUser]  # only admin/staff can change roles
+    permission_classes = [IsAdminRole, IsAdminUser]  # only admin/staff can change roles
 
     def post(self, request, username):
         """

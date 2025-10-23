@@ -74,6 +74,19 @@ class IsOwnProfileOrAdmin(BasePermission):
 
 from rest_framework.permissions import BasePermission
 
+class IsAdminRole(BasePermission):
+    """
+    Allows access only to users whose role is set to 'admin'.
+    """
+
+    def has_permission(self, request, view):
+        user = request.user
+        print("Checking IsAdminUserRole for user:", user)  # debug
+
+        return bool(user and user.is_authenticated and getattr(user, "role", None) == "admin")
+
+    
+
 class HasDeveloper(BasePermission):
     message = "Valid API key required (missing/expired)."
 
