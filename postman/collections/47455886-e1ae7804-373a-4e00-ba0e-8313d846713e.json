@@ -472,7 +472,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Api Key",
 					"id": "47455886-b08a0ee7-11fa-4fbf-85d2-b9337ba877a0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
