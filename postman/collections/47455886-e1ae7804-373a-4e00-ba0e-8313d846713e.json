@@ -293,11 +293,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/dev/seed/?api_key={{api_key}}",
+							"raw": "{{base_url}}/api/dev/seed/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"dev",
 								"seed",
 								""
