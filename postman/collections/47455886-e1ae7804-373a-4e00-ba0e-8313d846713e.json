@@ -407,11 +407,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/listusers/?api_key={{api_key}}",
+							"raw": "{{base_url}}/api/listusers/?api_key={{api_key}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"listusers",
 								""
 							],
