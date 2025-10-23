@@ -311,7 +311,91 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "47455886-efc5c35b-3acd-4edc-8f42-d98ec9e5697a",
+							"name": "Seed Workspace",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"teacher_count\": 4,\r\n    \"student_count\": 3, \r\n    \"guest_count\": 2 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/dev/seed/?api_key={{api_key}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"dev",
+										"seed",
+										""
+									],
+									"query": [
+										{
+											"key": "api_key",
+											"value": "{{api_key}}"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 23 Oct 2025 12:59:51 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"detail\": \"Seeded your workspace 'Dev2'\",\n    \"teachers\": 4,\n    \"students\": 3,\n    \"guests\": 2\n}"
+						}
+					]
 				},
 				{
 					"name": "List Users",
