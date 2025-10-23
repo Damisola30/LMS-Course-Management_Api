@@ -94,6 +94,32 @@
 					"response": []
 				},
 				{
+					"name": "Admin refresh token",
+					"id": "47455886-af551c4c-d8ca-4c28-b9f4-17ce34f8d44f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/accounts/admin/token/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"admin",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Api_Key",
 					"event": [
 						{
@@ -325,32 +351,6 @@
 									"value": "{{api_key}}",
 									"type": "text"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Admin refresh token",
-					"id": "47455886-af551c4c-d8ca-4c28-b9f4-17ce34f8d44f",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/accounts/admin/token/refresh/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"accounts",
-								"admin",
-								"token",
-								"refresh",
-								""
 							]
 						}
 					},
