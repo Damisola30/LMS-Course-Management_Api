@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import dj_database_url 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DB_link = os.getenv('DB_link')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -81,7 +87,7 @@ WSGI_APPLICATION = 'CMApi.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://lms_db_lw7d_user:9MPW59Oo5zh5Kcwkh6v9D0QQC3v6Himi@dpg-d3at7p6mcj7s73ef4a60-a.oregon-postgres.render.com/lms_db_lw7d',
+        default=DB_link,
         conn_max_age=600
     )
 
