@@ -143,7 +143,10 @@ class ChangeUserRoleView(APIView):
         if role not in dict(User.ROLE_CHOICES):
             return Response({"detail":"invalid role."}, status=status.HTTP_400_BAD_REQUEST)
 
+        if not username :
+            return Response({"detail":"username is required."}, status=status.HTTP_400_BAD_REQUEST)
         try:
+
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             return Response({"detail":"user not found."}, status=status.HTTP_404_NOT_FOUND)
