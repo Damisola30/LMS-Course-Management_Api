@@ -7,3 +7,4 @@ CMApi/CMApi/__pycache__/
 CMApi/accounts/migrations/__pycache__/
 CMApi/accounts/__pycache__/
 ../.vscode/
+.env
