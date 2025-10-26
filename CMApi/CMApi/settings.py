@@ -16,7 +16,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-DB_link = os.getenv('DB_link')
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'CMApi.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default=DB_link,
+        default=DATABASE_URL,
         conn_max_age=600
     )
 
