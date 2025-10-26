@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"Dev2\",\r\n    \"email\":\"Dev2@gmail.com\",\r\n    \"password\":\"Dev2\",\r\n    \"first_name\":\"Dev\",\r\n    \"last_name\":\"2\"\r\n}",
+							"raw": "{\r\n    \"username\":\"Dev1\",\r\n    \"email\":\"Dev1@gmail.com\",\r\n    \"password\":\"Dev1\",\r\n    \"first_name\":\"Dev\",\r\n    \"last_name\":\"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
