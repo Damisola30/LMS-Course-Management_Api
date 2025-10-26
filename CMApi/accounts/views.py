@@ -129,11 +129,12 @@ class RegisterView(generics.CreateAPIView):
 class ChangeUserRoleView(APIView):
     permission_classes = [IsAdminRole]  # only admin/staff can change roles
 
-    def post(self, request, username):
+    def post(self, request):
         """
         POST /api/admin/change-role/<username>/
         body: { "role": "teacher" }
         """
+        username = request.data.get("username")
         role = request.data.get("role")
         if not role:
             return Response({"detail":"role is required."}, status=status.HTTP_400_BAD_REQUEST)
