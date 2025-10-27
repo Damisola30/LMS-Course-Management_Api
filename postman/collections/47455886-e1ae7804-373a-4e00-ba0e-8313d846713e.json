@@ -843,7 +843,7 @@
 								}
 							]
 						},
-						"description": "Purpose: Exchanges a valid refresh token for a new access token."
+						"description": "Exchanges a valid refresh token for a new access token."
 					},
 					"response": []
 				}
