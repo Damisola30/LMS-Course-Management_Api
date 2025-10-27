@@ -211,7 +211,8 @@
 								"api-key",
 								""
 							]
-						}
+						},
+						"description": "Generates a new **API key** for the developer’s account. This key is required for authorized API access."
 					},
 					"response": []
 				},
