@@ -1840,7 +1840,7 @@
 				}
 			],
 			"id": "47455886-cad88934-f6cf-4add-a56f-44ee2c57cf9d",
-			"description": "Upload/download course files (per workspace).\n\n**Common operations**\n\n- **GET /course-materials/** – list materials.\n    \n- **POST /course-materials/** – create (multipart).\n    \n- **GET /course-materials/:id/** – details (and file URL).\n    \n- **DELETE /course-materials/:id/** – remove.\n    \n\n**Create (multipart)**\n\n- Headers: `Content-Type: multipart/form-data`\n    \n- Body (form-data):\n    \n    - `course`: (must be in tenant)\n        \n    - `title`: `Syllabus`\n        \n    - `file`: _(choose file)_\n        \n\n**Notes**\n\n- Files are stored under `/media/...` in dev; use object storage in prod."
+			"description": "Upload/download course files (per workspace).\n\n**Common operations**\n\n- **GET /course-materials/** – list materials.\n    \n- **POST /course-materials/** – create (Admin/Teacher only endpoint).\n    \n- **GET /course-materials/:id/** – details (and file URL).\n    \n- **DELETE /course-materials/:id/** – remove.\n    \n\n**Create (multipart)**\n\n- Headers: `Content-Type: multipart/form-data`\n    \n- Body (form-data):\n    \n    - `course`: (must be in tenant)\n        \n    - `title`: `Syllabus`\n        \n    - `file`: _(choose file)_\n        \n\n**Notes**\n\n- Files are stored under `/media/...` in dev; use object storage in prod."
 		},
 		{
 			"name": "lessons",
