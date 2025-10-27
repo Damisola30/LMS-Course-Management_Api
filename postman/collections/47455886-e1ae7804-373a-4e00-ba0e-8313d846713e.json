@@ -90,7 +90,8 @@
 								"login",
 								""
 							]
-						}
+						},
+						"description": "Authenticates an admin user and returns a **JWT token** for secure access to protected endpoints."
 					},
 					"response": []
 				},
