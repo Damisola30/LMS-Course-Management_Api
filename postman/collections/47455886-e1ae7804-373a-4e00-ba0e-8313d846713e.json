@@ -655,7 +655,8 @@
 									"value": "{{api_key}}"
 								}
 							]
-						}
+						},
+						"description": "Creates a new user under your developer account."
 					},
 					"response": [
 						{
