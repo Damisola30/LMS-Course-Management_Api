@@ -520,7 +520,8 @@
 								"delete",
 								""
 							]
-						}
+						},
+						"description": "Deletes a previously generated **API key**, revoking its access immediately."
 					},
 					"response": [
 						{
