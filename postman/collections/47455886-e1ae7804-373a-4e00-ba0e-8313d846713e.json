@@ -314,7 +314,8 @@
 									"value": "{{api_key}}"
 								}
 							]
-						}
+						},
+						"description": "Seeds a new **default workspace** environment with base configurations (e.g., default roles, permissions, or test users)."
 					},
 					"response": [
 						{
