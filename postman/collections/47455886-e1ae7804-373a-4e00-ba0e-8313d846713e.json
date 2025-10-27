@@ -1136,7 +1136,7 @@
 				}
 			],
 			"id": "47455886-3f67e213-441d-4aec-80f4-774cd7023464",
-			"description": "CRUD for teacher profiles within the current developer environment .\n\n**Common operations**\n\n- **GET /teachers/** – list teachers for this environment.\n    \n- **POST /teachers/** – create .\n    \n- **GET /teachers/:id/** – details.\n    \n- **PATCH /teachers/:id/** – update profile fields.\n    \n- **DELETE /teachers/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 10, \"username\": \"ws__teacher1\", \"email\": \"...\" },\n  \"specialization\": \"Math\",\n  \"experience\": 5,\n  \"is_active\": true,\n  \"created_at\": \"...\",\n  \"updated_at\": \"...\"\n}\n\n ```\n\n**Rules**\n\n- All results are **auto-scoped** to `request.develoepr`.\n    \n- Use `Authorization: Bearer {{jwt}}` from a teacher/admin account."
+			"description": "CRUD for teacher profiles within the current developer environment .\n\n**Common operations**\n\n- **GET /teachers/** – list teachers for this environment(Admin only).\n    \n- **POST /teachers/** – create .\n    \n- **GET /teachers/:id/** – details.\n    \n- **PATCH /teachers/:id/** – update profile fields.\n    \n- **DELETE /teachers/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 10, \"username\": \"ws__teacher1\", \"email\": \"...\" },\n  \"specialization\": \"Math\",\n  \"experience\": 5,\n  \"is_active\": true,\n  \"created_at\": \"...\",\n  \"updated_at\": \"...\"\n}\n\n ```\n\n**Rules**\n\n- All results are **auto-scoped** to `request.develoepr`.\n    \n- Use `Authorization: Bearer {{jwt}}` from a teacher/admin account."
 		},
 		{
 			"name": "Students",
