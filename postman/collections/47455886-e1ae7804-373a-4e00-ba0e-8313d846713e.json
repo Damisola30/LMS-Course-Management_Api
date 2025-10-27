@@ -842,7 +842,8 @@
 									"type": "text"
 								}
 							]
-						}
+						},
+						"description": "Purpose: Exchanges a valid refresh token for a new access token."
 					},
 					"response": []
 				}
