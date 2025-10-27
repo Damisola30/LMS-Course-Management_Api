@@ -787,7 +787,8 @@
 									"value": "{{api_key}}"
 								}
 							]
-						}
+						},
+						"description": "Authenticates a user and returns JWT access and refresh tokens."
 					},
 					"response": []
 				},
