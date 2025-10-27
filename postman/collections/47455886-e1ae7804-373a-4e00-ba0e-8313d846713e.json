@@ -1362,7 +1362,7 @@
 				}
 			],
 			"id": "47455886-b0fd75f9-fb7c-4c74-85a1-6a838a28d011",
-			"description": "Manage student profiles within the current workspace.\n\n**Common operations**\n\n- **GET /students/** – list.\n    \n- **POST /students/** – create Student account .\n    \n- **GET /students/:id/** – details.\n    \n- **PATCH /students/:id/** – update info.\n    \n- **DELETE /students/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 21, \"username\": \"ws__student1\", \"email\": \"...\" },\n  \"age\": 22,\n  \"enrolled_date\": \"2025-09-20\",\n  \"is_active\": true\n}\n\n ```\n\n**Rules**\n\n- Always tenant-scoped by `X-API-Key`.\n    \n- Students may only see/update their own profile (depending on perms)."
+			"description": "Manage student profiles within the current workspace.\n\n**Common operations**\n\n- **GET /students/** – list (Admin/Teacher).\n    \n- **POST /students/** – create Student account .\n    \n- **GET /students/:id/** – details.\n    \n- **PATCH /students/:id/** – update info.\n    \n- **DELETE /students/:id/** – remove.\n    \n\n**Model (key fields)**\n\n```\n{\n  \"id\": 1,\n  \"user\": { \"id\": 21, \"username\": \"ws__student1\", \"email\": \"...\" },\n  \"age\": 22,\n  \"enrolled_date\": \"2025-09-20\",\n  \"is_active\": true\n}\n\n ```\n\n**Rules**\n\n- Always tenant-scoped by `X-API-Key`.\n    \n- Students may only see/update their own profile (depending on perms)."
 		},
 		{
 			"name": "Courses",
