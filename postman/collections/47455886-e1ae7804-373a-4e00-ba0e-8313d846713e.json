@@ -428,7 +428,8 @@
 									"value": "{{api_key}}"
 								}
 							]
-						}
+						},
+						"description": "Retrieves all registered users under the admin’s developer account."
 					},
 					"response": []
 				},
