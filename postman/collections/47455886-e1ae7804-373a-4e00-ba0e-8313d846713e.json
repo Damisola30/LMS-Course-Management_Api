@@ -271,7 +271,8 @@
 								"api-key",
 								""
 							]
-						}
+						},
+						"description": "Retrieves the list of all **active API keys** belonging to the logged-in developer."
 					},
 					"response": []
 				},
