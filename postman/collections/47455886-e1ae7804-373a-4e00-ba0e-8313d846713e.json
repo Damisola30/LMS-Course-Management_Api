@@ -151,7 +151,8 @@
 								"refresh",
 								""
 							]
-						}
+						},
+						"description": "Refreshes the expired **JWT access token** using the refresh token."
 					},
 					"response": []
 				},
