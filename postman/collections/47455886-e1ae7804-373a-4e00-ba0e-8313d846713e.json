@@ -474,7 +474,8 @@
 								"dev2__teacher1",
 								""
 							]
-						}
+						},
+						"description": "Allows an admin to **update a user’s role** (e.g., student → teacher)."
 					},
 					"response": []
 				},
