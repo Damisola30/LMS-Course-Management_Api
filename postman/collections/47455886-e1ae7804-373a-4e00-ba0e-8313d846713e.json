@@ -39,7 +39,8 @@
 								"register",
 								""
 							]
-						}
+						},
+						"description": "Creates a new **developer (admin)** account. Each account will be able to generate API keys and manage its own user environment."
 					},
 					"response": []
 				},
