@@ -406,25 +406,11 @@ Tips:
 
 ---
 
-## 10) License
-<<<<<<< HEAD
-
-**MIT License** — see `LICENSE` file.
-=======
-....
->>>>>>> ed335ecff403821da0051da84d7d6f0cb3937ab2
-
----
 
 ## 11) Contact
 
-<<<<<<< HEAD
-* Author/Maintainer: **Your Name**
-* Email: **[you@example.com](mailto:you@example.com)**
-=======
 * Author/Maintainer: **Damisola Deboh-Ajiga**
 * Email: **damisola.d.ajiga@gmail.com**
->>>>>>> ed335ecff403821da0051da84d7d6f0cb3937ab2
 * Issues: use the repo **Issues** tab for bug reports & feature requests.
 
 ---
